@@ -1,0 +1,72 @@
+{
+  description = "Daniels-MacBook-Pro";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+    nix-darwin.url = "github:LnL7/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager }:
+  let 
+
+    inherit (darwin.lib) darwinSystem;
+    inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
+
+    # Configuration for `nixpkgs`
+    nixpkgsConfig = {
+      config = { allowUnfree = true; };
+      overlays = attrValues self.overlays ++ singleton (
+        # Sub in x86 version of packages that don't build on Apple Silicon yet
+        final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+          inherit (final.pkgs-x86)
+            idris2
+            nix-index
+            niv
+            purescript;
+        })
+      );
+    };
+  in
+  {
+    darwinConfigurations."Daniels-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+      modules = [
+        ./configuration.nix
+        home-manager.darwinModules.home-manager
+        {
+          nixpkgs = nixpkgsConfig;
+          home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.daniel = import ./home.nix;
+          };
+        }
+        ./shortcuts.nix
+        ./input_sources.nix
+      ];
+      specialArgs = { inherit inputs; };
+    };
+
+    overlays = {
+      # Overlays to add various packages into package set
+        comma = final: prev: {
+          comma = import inputs.comma { inherit (prev) pkgs; };
+        };
+
+      # Overlay useful on Macs with Apple Silicon
+        apple-silicon = final: prev: optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+          # Add access to x86 packages system is running Apple Silicon
+          pkgs-x86 = import inputs.nixpkgs {
+            system = "x86_64-darwin";
+            inherit (nixpkgsConfig) config;
+          };
+        };
+      };
+  };
+}
