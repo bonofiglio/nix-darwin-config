@@ -65,6 +65,7 @@
     lua-language-server
 
     sqlite
+
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];

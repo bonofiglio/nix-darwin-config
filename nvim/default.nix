@@ -66,6 +66,7 @@
           type = "lua";
           config = builtins.readFile ./lua/treesitter.lua;
       }
+      codeium-vim
     ];
   };
 }
