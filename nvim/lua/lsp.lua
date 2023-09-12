@@ -3,14 +3,11 @@ local lsp = require('lsp-zero').preset({})
 lsp.preset("recommended")
 
 local lsp_list = {
-    -- LSP:
-    'rome', -- TS, JS, CSS, HTML Toolkit
     -- TS/JS
     'tsserver',
     -- 'denols',
     -- NPM
     'eslint',
-    'prismals',
     'svelte',
     'volar', -- Vue LSP
     -- HTML, CSS
@@ -21,7 +18,7 @@ local lsp_list = {
     -- Configuration files
     'jsonls',
     'yamlls',
-    --	'docker_compose_language_server',
+    'docker_compose_language_service',
     'dockerls',
     'taplo', -- TOML Toolkit
     -- 'nginx-language-server',
@@ -29,14 +26,14 @@ local lsp_list = {
     'lua_ls',
     'rust_analyzer',
     'gopls', -- Go LSP
-    'pylsp',
+    -- 'pylsp',
     'clangd',
-    'graphql',
-    'hls', -- Haskell LSP
+    -- 'graphql',
+    -- 'hls', -- Haskell LSP
     'bashls',
-    'ocamllsp',
-    'terraformls',
-    'zls', -- Zig LSP
+    -- 'ocamllsp',
+    -- 'terraformls',
+    -- 'zls', -- Zig LSP
     -- Linters:
     -- 'cpplint',
     -- 'staticcheck', -- Go linter
@@ -87,7 +84,5 @@ clangd_capabilities.offsetEncoding = "utf-8"
 require('lspconfig').clangd.setup{
     capabilities = clangd_capabilities
 }
-
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 lsp.setup()
