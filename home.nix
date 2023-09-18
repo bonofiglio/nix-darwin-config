@@ -18,7 +18,11 @@
   programs.htop.settings.show_program_path = true;
 
   programs.zsh.enable = true;
-  programs.zsh.enableCompletion = false;
+  programs.zsh.enableCompletion = true;
+  programs.zsh.completionInit = ''
+    autoload -U compinit 
+    compinit -u
+  '';
   
   programs.nix-index.enable = true;
 
@@ -28,6 +32,7 @@
     gimp
     zoom-us
     discord
+    qbittorrent
 
     # Window management
     rectangle
@@ -40,6 +45,9 @@
     jq
     ripgrep # Required for NeoVim plugins
     taplo # TOML toolkit
+    tmux
+    tmate
+    nodePackages.pnpm
 
     # Laguages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
@@ -48,6 +56,8 @@
     nodejs_20
     cargo
     rustc
+    bun
+    deno
 
     # LSPs
     gotools
@@ -63,6 +73,7 @@
     nodePackages.bash-language-server
     docker-compose-language-service
     lua-language-server
+    nil
 
     sqlite
 
@@ -90,9 +101,13 @@
   # Kitty
   programs.kitty = {
       enable = true;
+      
       extraConfig = ''
         map cmd+t no_op
         map cmd+t launch --cwd=current --type=tab
+        tab_bar_style powerline
+        tab_powerline_style round
+        window_padding_width 0 0 0 1
       '';
       font = {
         name = "JetBrainsMonoNL Nerd Font Mono";

@@ -2,6 +2,7 @@ local lsp = require('lsp-zero').preset({})
 
 lsp.preset("recommended")
 
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local lsp_list = {
     -- TS/JS
     'tsserver',
@@ -13,8 +14,8 @@ local lsp_list = {
     -- HTML, CSS
     'html',
     'cssls',
-    'cssmodules_ls',
-    'tailwindcss',
+    -- 'cssmodules_ls',
+    -- 'tailwindcss',
     -- Configuration files
     'jsonls',
     'yamlls',
@@ -23,6 +24,7 @@ local lsp_list = {
     'taplo', -- TOML Toolkit
     -- 'nginx-language-server',
 
+    'nil_ls', -- Nix LSP
     'lua_ls',
     'rust_analyzer',
     'gopls', -- Go LSP
@@ -81,7 +83,7 @@ local clangd_capabilities = require('cmp_nvim_lsp').default_capabilities()
 clangd_capabilities.textDocument.semanticHighlighting = true
 clangd_capabilities.offsetEncoding = "utf-8"
 
-require('lspconfig').clangd.setup{
+require('lspconfig').clangd.setup {
     capabilities = clangd_capabilities
 }
 

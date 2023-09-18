@@ -26,6 +26,8 @@
     # System-wide apps
     environment.systemPackages = with pkgs; [];
 
+    environment.pathsToLink = [ "/share/zsh" ];
+
     programs.nix-index.enable = true;
 
     # Fonts
@@ -95,6 +97,7 @@
             raycastGlobalHotkey = "Command-36";
             raycastShouldFollowSystemAppearance = 1;
             showGettingStartedLink = 0;
+            navigationCommandStyleIdentifierKey = "vim";
         };
     };
 }
