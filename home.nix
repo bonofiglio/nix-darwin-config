@@ -52,6 +52,7 @@
     tmate
     nodePackages.pnpm
     cargo-expand
+    hyperfine # CLI benchmark
 
     # Laguages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
