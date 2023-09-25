@@ -48,6 +48,7 @@
     tmux
     tmate
     nodePackages.pnpm
+    cargo-expand
 
     # Laguages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
