@@ -77,6 +77,7 @@ in
           type = "lua";
           config = builtins.readFile ./lua/treesitter.lua;
       }
+      (fromGitHub "main" "172027cccd3e657afc3b7e05552f5980e66d544e" "dariuscorvus/tree-sitter-surrealdb")
       {
           plugin = codeium-vim;
           type = "lua";
