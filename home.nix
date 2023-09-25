@@ -17,12 +17,15 @@
   programs.htop.enable = true;
   programs.htop.settings.show_program_path = true;
 
-  programs.zsh.enable = true;
-  programs.zsh.enableCompletion = true;
-  programs.zsh.completionInit = ''
-    autoload -U compinit 
-    compinit -u
-  '';
+  programs.zsh = {
+      enable = true;
+      enableCompletion = true;
+      defaultKeymap = "viins";
+      completionInit = ''
+          autoload -U compinit 
+          compinit -u
+      '';
+  };
   
   programs.nix-index.enable = true;
 
