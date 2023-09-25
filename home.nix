@@ -54,16 +54,20 @@
     python312
     go
     nodejs_20
-    cargo
-    rustc
+    (fenix.complete.withComponents [
+      "cargo"
+      "clippy"
+      "rust-src"
+      "rustc"
+      "rustfmt"
+    ])
     bun
     deno
 
     # LSPs
     gotools
     gopls
-    rust-analyzer
-    rustfmt
+    rust-analyzer-nightly
     vscode-langservers-extracted
     nodePackages.typescript-language-server
     nodePackages.svelte-language-server

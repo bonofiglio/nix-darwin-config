@@ -11,9 +11,15 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Input for rust toolchain
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager, fenix }:
   let 
 
     inherit (darwin.lib) darwinSystem;
@@ -67,6 +73,7 @@
             inherit (nixpkgsConfig) config;
           };
         };
+        fenix = inputs.fenix.overlays.default;
       };
   };
 }
