@@ -47,6 +47,10 @@
     system.defaults.dock.show-recents = false;
     system.defaults.dock.tilesize = 32;
     system.defaults.dock.mru-spaces = false;
+    system.defaults.dock.wvous-bl-corner = 1;
+    system.defaults.dock.wvous-tl-corner = 1;
+    system.defaults.dock.wvous-br-corner = 1;
+    system.defaults.dock.wvous-tr-corner = 1;
 
     # Finder
     system.defaults.finder.AppleShowAllExtensions = true;
