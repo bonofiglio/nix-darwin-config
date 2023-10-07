@@ -1,4 +1,8 @@
 { pkgs, lib, ... }:
+let
+# Imports
+defaults = import ./defaults;
+in
 {
     # Nix configuration ------------------------------------------------------------------------------
     nix.settings.trusted-users = [
@@ -104,4 +108,7 @@
             navigationCommandStyleIdentifierKey = "vim";
         };
     };
+
+    # Custom activation script
+    system.activationScripts.extraUserActivation.text = "${defaults}";
 }
