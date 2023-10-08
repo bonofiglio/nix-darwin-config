@@ -58,7 +58,7 @@ in
     hyperfine # CLI benchmark
     m-cli # useful macOS CLI commands
 
-    # Laguages
+    # Languages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
     python312
     go
