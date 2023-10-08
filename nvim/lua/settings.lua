@@ -17,8 +17,13 @@ vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
 vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
+
+if os.getenv("KITTY_SCROLLBACK") == "1" then
+    vim.opt.signcolumn = "no"
+else
+    vim.opt.signcolumn = "yes"
+end
 
 vim.opt.updatetime = 50
 

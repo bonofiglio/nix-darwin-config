@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let 
     treesitterSurreal = import ./github-plugins/treesitter-surrealdb.nix(pkgs);
+    kittyScrollback = import ./github-plugins/kitty-scrollback.nix(pkgs);
 in
 {
   programs.neovim = {
@@ -81,6 +82,7 @@ in
           type = "lua";
           config = builtins.readFile ./lua/codeium.lua;
       }
+      kittyScrollback
     ];
   };
 }

@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let 
+kittyScrollbackNvim = import ./nvim/github-plugins/kitty-scrollback.nix(pkgs);
+in
 {
   imports = [
     ./nvim
@@ -123,6 +126,16 @@
         enabled_layouts tall:bias=50;full_size=1;mirrored=false
         map ctrl+[ layout_action decrease_num_full_size_windows
         map ctrl+] layout_action increase_num_full_size_windows
+
+        allow_remote_control socket-only
+        listen_on unix:/tmp/kitty
+        shell_integration enable
+
+        # kitty-scrollback.nvim Kitten alias
+        action_alias kitty_scrollback_nvim kitten '' + kittyScrollbackNvim + ''/python/kitty_scrollback_nvim.py --cwd '' + kittyScrollbackNvim + ''/lua/kitty-scrollback/configs --nvim-args "--noplugin -n" --env KITTY_SCROLLBACK=1
+
+        # Browse scrollback buffer in nvim
+        map ctrl+shift+h kitty_scrollback_nvim
       '';
       font = {
         name = "JetBrainsMonoNL Nerd Font Mono";
