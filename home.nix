@@ -34,7 +34,6 @@ in
 
   home.packages = with pkgs; [
     # UI apps
-    docker
     gimp
     zoom-us
     discord
@@ -45,6 +44,7 @@ in
     raycast
 
     # Terminal tools
+    docker
     coreutils
     openssl
     pandoc # Document formatter
