@@ -38,6 +38,17 @@ in
     zoom-us
     discord
     qbittorrent
+    height
+    craft
+    blender
+    unar # Unarchiver
+    vscode # Live share has me by the b
+    vlc
+    android-file-transfer
+
+    # Web browsers
+    firefox
+    ungoogled-chromium
 
     # Window management
     rectangle
@@ -57,6 +68,7 @@ in
     cargo-expand
     hyperfine # CLI benchmark
     m-cli # useful macOS CLI commands
+    parallel
 
     # Languages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
@@ -88,7 +100,9 @@ in
     lua-language-server
     nil
 
+    # Databases
     sqlite
+    surrealdb
   ];
 
   # Git
