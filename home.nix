@@ -138,7 +138,7 @@ in
         map ctrl+shift+h kitty_scrollback_nvim
       '';
       font = {
-        name = "JetBrainsMonoNL Nerd Font Mono";
+        name = "JetBrainsMonoNL Nerd Font";
         size = 20;
       };
       theme = "Catppuccin-Mocha";
