@@ -69,6 +69,11 @@ in
           type = "lua";
           config = builtins.readFile ./lua/treesitter.lua;
       }
+      {
+          plugin = nvim-treesitter-context;
+          type = "lua";
+          config = builtins.readFile ./lua/treesitter-context.lua;
+      }
       treesitterSurreal
       {
           plugin = codeium-vim;
