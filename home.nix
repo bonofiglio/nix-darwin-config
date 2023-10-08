@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./nvim
@@ -53,6 +53,7 @@
     nodePackages.pnpm
     cargo-expand
     hyperfine # CLI benchmark
+    m-cli # useful macOS CLI commands
 
     # Laguages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
@@ -85,9 +86,6 @@
     nil
 
     sqlite
-
-  ] ++ lib.optionals stdenv.isDarwin [
-    m-cli # useful macOS CLI commands
   ];
 
   # Git
