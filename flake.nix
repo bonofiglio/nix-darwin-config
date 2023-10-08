@@ -26,7 +26,7 @@
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager, fenix, neovim-nightly-overlay }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager, fenix, bonofiglio-overlay, neovim-nightly-overlay }:
   let 
     inherit (darwin.lib) darwinSystem;
     inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
