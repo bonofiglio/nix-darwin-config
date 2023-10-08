@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 let 
     treesitterSurreal = import ./github-plugins/treesitter-surrealdb.nix(pkgs);
 in
