@@ -9,6 +9,7 @@ in
     vimAlias = true;
     vimdiffAlias = true;
     extraLuaConfig = builtins.readFile ./lua/settings.lua;
+    package = pkgs.neovim-nightly;
     plugins = with pkgs.vimPlugins; [
       {
           plugin = undotree;

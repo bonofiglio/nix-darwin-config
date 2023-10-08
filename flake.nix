@@ -17,9 +17,12 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager, fenix }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager, fenix, neovim-nightly-overlay }:
   let 
 
     inherit (darwin.lib) darwinSystem;
@@ -74,6 +77,7 @@
           };
         };
         fenix = inputs.fenix.overlays.default;
+        neovim-nightly = neovim-nightly-overlay.overlay;
       };
   };
 }
