@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 let 
+    treesitterSurreal = import ./github-plugins/treesitter-surrealdb.nix(pkgs);
 in
 {
   programs.neovim = {
@@ -68,6 +69,7 @@ in
           type = "lua";
           config = builtins.readFile ./lua/treesitter.lua;
       }
+      treesitterSurreal
       {
           plugin = codeium-vim;
           type = "lua";
