@@ -20,11 +20,14 @@
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
+    bonofiglio-overlay = {
+        url = "/Users/daniel/dev/nix-overlay/";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager, fenix, neovim-nightly-overlay }:
   let 
-
     inherit (darwin.lib) darwinSystem;
     inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
 
@@ -76,7 +79,10 @@
           };
         };
         fenix = inputs.fenix.overlays.default;
+        custom-overlay = bonofiglio-overlay.overlays.default;
         neovim-nightly = neovim-nightly-overlay.overlay;
       };
   };
 }
+
+
