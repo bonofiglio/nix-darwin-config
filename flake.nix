@@ -57,7 +57,6 @@
           };
         }
         ./shortcuts.nix
-        ./input_sources.nix
       ];
       specialArgs = { inherit inputs; };
     };
