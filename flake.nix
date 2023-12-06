@@ -21,7 +21,7 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     bonofiglio-overlay = {
-        url = "/Users/daniel/dev/nix-overlay/";
+        url = "github:bonofiglio/nix-overlay";
         inputs.nixpkgs.follows = "nixpkgs";
     };
   };
