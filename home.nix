@@ -69,6 +69,7 @@ in
     hyperfine # CLI benchmark
     m-cli # useful macOS CLI commands
     parallel
+    ffmpeg
 
     # Languages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
