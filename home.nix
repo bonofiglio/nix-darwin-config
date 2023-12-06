@@ -70,6 +70,7 @@ in
     m-cli # useful macOS CLI commands
     parallel
     ffmpeg
+    sc-im # Spreadsheet viewer
 
     # Languages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
