@@ -86,4 +86,12 @@ require('lspconfig').clangd.setup {
     capabilities = clangd_capabilities
 }
 
+require('lspconfig').lua_ls.setup {
+    settings = {
+        Lua = {
+            completion = { callSnippet = "Replace" },
+        }
+    }
+}
+
 lsp.setup()

@@ -12,6 +12,7 @@ in
     extraLuaConfig = builtins.readFile ./lua/settings.lua;
     package = pkgs.neovim-nightly;
     plugins = with pkgs.vimPlugins; [
+      neodev-nvim
       {
           plugin = undotree;
           type = "lua";
