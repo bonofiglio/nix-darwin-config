@@ -47,7 +47,6 @@ local lsp_list = {
     -- 'rustfmt',
 }
 
-lsp.ensure_installed(lsp_list)
 lsp.setup_servers(lsp_list)
 
 local cmp = require('cmp')
