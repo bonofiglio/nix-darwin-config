@@ -68,7 +68,7 @@ in
     system.defaults.loginwindow.GuestEnabled = false;
 
     # MacOS garbage
-    system.defaults.spaces.spans-displays = true;
+    system.defaults.spaces.spans-displays = false;
 
     system.defaults.CustomUserPreferences = {
         "com.apple.finder" = {
