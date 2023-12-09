@@ -26,7 +26,7 @@ in
       {
           plugin = vim-fugitive;
           type = "lua";
-          config = "vim.keymap.set('n', '<leader>gs', vim.cmd.Git)";
+          config = builtins.readFile ./lua/fugitive.lua;
       }
       {
         plugin = nvim-scrollbar;
