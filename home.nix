@@ -68,6 +68,7 @@ in
     vscode # Live share has me by the b
     vlc
     android-file-transfer
+    obsidian
 
     # Web browsers
     firefox
