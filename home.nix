@@ -101,7 +101,7 @@ in
     python312
     go
     nodejs_20
-    (fenix.complete.withComponents [
+    (fenix.stable.withComponents [
       "cargo"
       "clippy"
       "rust-src"
@@ -114,7 +114,7 @@ in
     # LSPs
     gotools
     gopls
-    rust-analyzer-nightly
+    rust-analyzer
     vscode-langservers-extracted
     nodePackages.typescript-language-server
     nodePackages.svelte-language-server
