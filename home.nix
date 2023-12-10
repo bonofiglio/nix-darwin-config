@@ -39,6 +39,12 @@ in
               stty intr \^C
           }
           ZVM_VI_INSERT_ESCAPE_BINDKEY=^C
+          # Yank to the system clipboard
+          function zvm_vi_yank() {
+              zvm_yank
+              echo ''${CUTBUFFER} | pbcopy
+              zvm_exit_visual_mode
+          }
 
           source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
           source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
