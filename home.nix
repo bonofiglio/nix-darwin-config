@@ -131,6 +131,7 @@ in
     docker-compose-language-service
     lua-language-server
     nil
+    emmet-ls
 
     # Databases
     sqlite

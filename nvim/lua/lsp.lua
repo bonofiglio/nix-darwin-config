@@ -14,6 +14,7 @@ local lsp_list = {
     -- HTML, CSS
     'html',
     'cssls',
+    'emmet_ls',
     -- 'cssmodules_ls',
     -- 'tailwindcss',
     -- Configuration files
