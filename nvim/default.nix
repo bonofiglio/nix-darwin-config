@@ -79,6 +79,11 @@ in
       }
       treesitterSurreal
       {
+          plugin = nvim-ts-autotag;
+          type = "lua";
+          config = "require('nvim-ts-autotag').setup()";
+      }
+      {
           plugin = codeium-vim;
           type = "lua";
           config = builtins.readFile ./lua/codeium.lua;
