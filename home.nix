@@ -176,13 +176,13 @@ in
 
         allow_remote_control socket-only
         listen_on unix:/tmp/kitty
-        shell_integration enable
+        shell_integration enabled
 
         # kitty-scrollback.nvim Kitten alias
-        action_alias kitty_scrollback_nvim kitten '' + kittyScrollbackNvim + ''/python/kitty_scrollback_nvim.py --cwd '' + kittyScrollbackNvim + ''/lua/kitty-scrollback/configs --nvim-args "--noplugin -n" --env KITTY_SCROLLBACK=1
+        action_alias kitty_scrollback_nvim kitten '' + kittyScrollbackNvim + ''/python/kitty_scrollback_nvim.py
 
         # Browse scrollback buffer in nvim
-        map ctrl+shift+h kitty_scrollback_nvim
+        map ctrl+shift+h kitty_scrollback_nvim --nvim-args "--noplugin --clean -n" --env KITTY_SCROLLBACK=1
       '';
       font = {
         name = "JetBrainsMonoNL Nerd Font";

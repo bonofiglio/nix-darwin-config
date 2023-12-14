@@ -83,7 +83,11 @@ in
           type = "lua";
           config = builtins.readFile ./lua/codeium.lua;
       }
-      kittyScrollback
+      {
+          plugin = kittyScrollback;
+          type = "lua";
+          config = "require('kitty-scrollback').setup()";
+      }
     ];
   };
 }

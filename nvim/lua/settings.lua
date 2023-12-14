@@ -72,8 +72,8 @@ vim.keymap.set("n", "<leader>j", "<cmd> bn <CR>")
 vim.keymap.set("n", "<leader>x", "<cmd> bd <CR>")
 
 vim.keymap.set("n", "<leader>w", function()
-  vim.lsp.buf.format()
-  vim.cmd("write");
+    vim.lsp.buf.format()
+    vim.cmd("write");
 end)
 
 -- this is very dumb but it allows <c-m> to be mapped to a different action than <cr>
