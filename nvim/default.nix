@@ -10,7 +10,7 @@ in
     vimAlias = true;
     vimdiffAlias = true;
     extraLuaConfig = builtins.readFile ./lua/settings.lua;
-    package = pkgs.neovim-nightly;
+    package = pkgs.neovim-unwrapped;
     plugins = with pkgs.vimPlugins; [
       neodev-nvim
       {
