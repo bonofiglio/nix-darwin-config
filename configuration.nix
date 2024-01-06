@@ -11,6 +11,7 @@ in
     nix.configureBuildUsers = true;
     nixpkgs.hostPlatform = "aarch64-darwin";
     users.users.daniel.home = /Users/daniel;
+    nix.settings.substituters = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
 
     # Enable experimental nix command and flakes
     # nix.package = pkgs.nixUnstable;
