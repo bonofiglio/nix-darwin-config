@@ -79,7 +79,6 @@ in
 
     # Web browsers
     firefox
-    ungoogled-chromium
 
     # Window management
     rectangle
