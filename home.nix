@@ -101,6 +101,8 @@ in
     parallel
     ffmpeg
     sc-im # Spreadsheet viewer
+    cargo-cross # Cross compilation tool for cargo
+    colima # Docker starter
 
     # Languages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
