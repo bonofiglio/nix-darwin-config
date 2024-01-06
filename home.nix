@@ -75,6 +75,7 @@ in
     vlc
     android-file-transfer
     obsidian
+    anki-bin
 
     # Web browsers
     firefox
