@@ -104,6 +104,7 @@ in
     cargo-cross # Cross compilation tool for cargo
     colima # Docker starter
     lighttpd
+    p7zip
 
     # Languages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
