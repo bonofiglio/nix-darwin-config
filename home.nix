@@ -103,6 +103,7 @@ in
     sc-im # Spreadsheet viewer
     cargo-cross # Cross compilation tool for cargo
     colima # Docker starter
+    lighttpd
 
     # Languages
     llvmPackages_16.clang-unwrapped # Includes clangd lsp
