@@ -98,6 +98,11 @@ in
           type = "lua";
           config = builtins.readFile ./lua/oil.lua;
       }
+      {
+          plugin = trouble-nvim;
+          type = "lua";
+          config = builtins.readFile ./lua/trouble.lua;
+      }
     ];
   };
 }
