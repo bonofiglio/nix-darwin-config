@@ -93,6 +93,11 @@ in
           type = "lua";
           config = "require('kitty-scrollback').setup()";
       }
+      {
+          plugin = oil-nvim;
+          type = "lua";
+          config = builtins.readFile ./lua/oil.lua;
+      }
     ];
   };
 }
