@@ -9,6 +9,11 @@ in
 
   home.stateVersion = "22.05";
 
+  # Set environment variables
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+
   # Direnv, load and unload environment variables depending on the current directory.
   # https://direnv.net
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.direnv.enable
