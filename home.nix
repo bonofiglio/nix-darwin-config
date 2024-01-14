@@ -107,7 +107,7 @@ in
     p7zip
 
     # Languages
-    llvmPackages_16.clang-unwrapped # Includes clangd lsp
+    llvmPackages_17.clang-unwrapped # Includes clangd lsp
     python312
     go
     nodejs_20
