@@ -1,10 +1,9 @@
 { pkgs, ... }:
-let 
-kittyScrollbackNvim = import ./nvim/github-plugins/kitty-scrollback.nix(pkgs);
-in
 {
   imports = [
-    ./nvim
+    ./config/nvim
+    ./config/zsh.nix
+    ./config/kitty.nix
   ];
 
   home.stateVersion = "22.05";
@@ -25,45 +24,6 @@ in
   programs.htop.enable = true;
   programs.htop.settings.show_program_path = true;
 
-  programs.zsh = {
-      enable = true;
-      enableCompletion = true;
-      defaultKeymap = "viins";
-      completionInit = ''
-          autoload -U compinit 
-          compinit -u
-      '';
-      initExtra = ''
-          source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.zsh
-          # Replace the vi insert escape key with ^C by changing it to ^E and
-          # changing it back to ^C when a command is executed
-          precmd() {
-              stty intr \^E
-          }
-          preexec() {
-              stty intr \^C
-          }
-          ZVM_VI_INSERT_ESCAPE_BINDKEY=^C
-          # Yank to the system clipboard
-          function zvm_vi_yank() {
-              zvm_yank
-              echo ''${CUTBUFFER} | pbcopy
-              zvm_exit_visual_mode
-          }
-
-          source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-          source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-          source ${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-          bindkey -M viins '^[[A' history-substring-search-up
-          bindkey -M viins '^[[B' history-substring-search-down
-          bindkey -M vicmd '^[[A' history-substring-search-up
-          bindkey -M vicmd '^[[B' history-substring-search-down
-          bindkey -M vicmd 'k' history-substring-search-up
-          bindkey -M vicmd 'j' history-substring-search-down
-      '';
-  };
-  
   programs.nix-index.enable = true;
 
   home.packages = with pkgs; [
@@ -74,6 +34,8 @@ in
     qbittorrent
     height
     craft
+    # hiddenbar
+    # bitslicer
     blender
     unar # Unarchiver
     vscode # Live share has me by the b
@@ -110,10 +72,11 @@ in
     colima # Docker starter
     lighttpd
     p7zip
+    rmtrash
+    trash-cli
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
-    python312
     go
     nodejs_20
     (fenix.stable.withComponents [
@@ -164,42 +127,6 @@ in
 
   # LazyGit
   programs.lazygit.enable = true;
-
-  # Kitty
-  programs.kitty = {
-      enable = true;
-      
-      extraConfig = ''
-        map cmd+t no_op
-        map cmd+t launch --cwd=current --type=tab
-
-        window_padding_width 0 0 5 1
-
-        tab_bar_min_tabs            1
-        tab_bar_edge                bottom
-        tab_bar_style               powerline
-        tab_powerline_style         slanted
-
-        enabled_layouts tall:bias=50;full_size=1;mirrored=false
-        map ctrl+[ layout_action decrease_num_full_size_windows
-        map ctrl+] layout_action increase_num_full_size_windows
-
-        allow_remote_control socket-only
-        listen_on unix:/tmp/kitty
-        shell_integration enabled
-
-        # kitty-scrollback.nvim Kitten alias
-        action_alias kitty_scrollback_nvim kitten '' + kittyScrollbackNvim + ''/python/kitty_scrollback_nvim.py
-
-        # Browse scrollback buffer in nvim
-        map ctrl+shift+h kitty_scrollback_nvim --nvim-args "--noplugin --clean -n" --env KITTY_SCROLLBACK=1
-      '';
-      font = {
-        name = "JetBrainsMonoNL Nerd Font";
-        size = 20;
-      };
-      theme = "Catppuccin-Mocha";
-  };
 
   # SSH
   programs.ssh = {

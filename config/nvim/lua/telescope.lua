@@ -9,6 +9,13 @@ vim.keymap.set('n', '<leader>ps', function()
 end)
 
 require "telescope".setup {
+    extensions = {
+        frecency = {
+            auto_validate = true,
+            db_safe_mode = false,
+            db_validate_threshold = 1
+        }
+    },
     pickers = {
         colorscheme = {
             enable_preview = true
