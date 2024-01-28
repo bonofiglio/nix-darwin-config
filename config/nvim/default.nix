@@ -78,10 +78,11 @@ in
           config = builtins.readFile ./lua/treesitter-context.lua;
       }
       treesitterSurreal
+      nvim-treesitter-textobjects
       {
-          plugin = nvim-ts-autotag;
+          plugin = nvim-surround;
           type = "lua";
-          config = "require('nvim-ts-autotag').setup()";
+          config = ''require("nvim-surround").setup()'';
       }
       {
           plugin = codeium-vim;
