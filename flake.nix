@@ -21,56 +21,56 @@
     # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     bonofiglio-overlay = {
-        url = "github:bonofiglio/nix-overlay";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:bonofiglio/nix-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager, fenix, bonofiglio-overlay }:
-  let 
-    inherit (darwin.lib) darwinSystem;
-    inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
+    let
+      inherit (darwin.lib) darwinSystem;
+      inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
 
-    # Configuration for `nixpkgs`
-    nixpkgsConfig = {
-      config = { allowUnfree = true; };
-      overlays = attrValues self.overlays ++ singleton (
-        # Sub in x86 version of packages that don't build on Apple Silicon yet
-        final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
-          inherit (final.pkgs-x86)
-            idris2
-            nix-index
-            niv
-            purescript;
-        })
-      );
-    };
-  in
-  {
-    darwinConfigurations."Daniels-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-      modules = [
-        ./configuration.nix
-        home-manager.darwinModules.home-manager
-        {
-          nixpkgs = nixpkgsConfig;
-          home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.daniel = import ./home.nix;
-          };
-        }
-        ./shortcuts.nix
-      ];
-      specialArgs = { inherit inputs; };
-    };
+      # Configuration for `nixpkgs`
+      nixpkgsConfig = {
+        config = { allowUnfree = true; };
+        overlays = attrValues self.overlays ++ singleton (
+          # Sub in x86 version of packages that don't build on Apple Silicon yet
+          final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+            inherit (final.pkgs-x86)
+              idris2
+              nix-index
+              niv
+              purescript;
+          })
+        );
+      };
+    in
+    {
+      darwinConfigurations."Daniels-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+        modules = [
+          ./configuration.nix
+          home-manager.darwinModules.home-manager
+          {
+            nixpkgs = nixpkgsConfig;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.daniel = import ./home.nix;
+            };
+          }
+          ./shortcuts.nix
+        ];
+        specialArgs = { inherit inputs; };
+      };
 
-    overlays = {
-      # Overlays to add various packages into package set
+      overlays = {
+        # Overlays to add various packages into package set
         comma = final: prev: {
           comma = import inputs.comma { inherit (prev) pkgs; };
         };
 
-      # Overlay useful on Macs with Apple Silicon
+        # Overlay useful on Macs with Apple Silicon
         apple-silicon = final: prev: optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
           # Add access to x86 packages system is running Apple Silicon
           pkgs-x86 = import inputs.nixpkgs {
@@ -82,7 +82,7 @@
         custom-overlay = bonofiglio-overlay.overlays.default;
         # neovim-nightly = neovim-nightly-overlay.overlay;
       };
-  };
+    };
 }
 
 

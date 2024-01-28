@@ -1,6 +1,6 @@
 let
-boolValue = x: if x then "YES" else "NO";
-toXml = xmlValue: with builtins;
+  boolValue = x: if x then "YES" else "NO";
+  toXml = xmlValue: with builtins;
     if isBool xmlValue then "<bool>${boolValue xmlValue}</bool>" else
     if isInt xmlValue then "<integer>${toString xmlValue}</integer>" else
     if isFloat xmlValue then "<float>${strings.floatToString xmlValue}</float>" else

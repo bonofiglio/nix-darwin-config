@@ -117,12 +117,12 @@
     userEmail = "dev@dan.uy";
     userName = "Daniel Bonofiglio";
     extraConfig = {
-        init.defaultBranch = "main";
-        url = {
-            "ssh://git@github.com/" = {
-                insteadOf = "https://github.com/";
-            };
+      init.defaultBranch = "main";
+      url = {
+        "ssh://git@github.com/" = {
+          insteadOf = "https://github.com/";
         };
+      };
     };
   };
 
@@ -133,13 +133,13 @@
   programs.ssh = {
     enable = true;
     matchBlocks = {
-        "github.com" = {
-            identityFile = "~/.ssh/id_ed25519";
-            extraOptions = {
-                "AddKeysToAgent" = "yes";
-                "UseKeychain" = "yes";
-            };
+      "github.com" = {
+        identityFile = "~/.ssh/id_ed25519";
+        extraOptions = {
+          "AddKeysToAgent" = "yes";
+          "UseKeychain" = "yes";
         };
+      };
     };
   };
 }
