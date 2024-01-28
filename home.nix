@@ -74,6 +74,7 @@
     p7zip
     rmtrash
     trash-cli
+    nixpkgs-fmt
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp

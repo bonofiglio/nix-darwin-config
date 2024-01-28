@@ -94,5 +94,28 @@ require('lspconfig').lua_ls.setup {
         }
     }
 }
+-- https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
+-- https://github.com/hrsh7th/cmp-nvim-lsp/issues/42#issuecomment-1283825572
+local nil_ls_capabilities = vim.tbl_deep_extend(
+    'force',
+    vim.lsp.protocol.make_client_capabilities(),
+    require('cmp_nvim_lsp').default_capabilities(),
+    -- File watching is disabled by default for neovim.
+    -- See: https://github.com/neovim/neovim/pull/22405
+    { workspace = { didChangeWatchedFiles = { dynamicRegistration = true } } }
+);
+
+require('lspconfig').nil_ls.setup {
+    autostart = true,
+    capabilities = nil_ls_capabilities,
+    settings = {
+        ['nil'] = {
+            testSetting = 42,
+            formatting = {
+                command = { "nixpkgs-fmt" },
+            },
+        },
+    },
+}
 
 lsp.setup()
