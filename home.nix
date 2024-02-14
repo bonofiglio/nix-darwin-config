@@ -69,7 +69,6 @@
     m-cli # useful macOS CLI commands
     parallel
     ffmpeg
-    sc-im # Spreadsheet viewer
     cargo-cross # Cross compilation tool for cargo
     colima # Docker starter
     lighttpd

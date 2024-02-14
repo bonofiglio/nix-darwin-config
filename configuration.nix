@@ -22,10 +22,6 @@ in
     extra-platforms = x86_64-darwin aarch64-darwin
   '';
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "libxls-1.6.2"
-  ];
-
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.zsh.enable = true;
 
