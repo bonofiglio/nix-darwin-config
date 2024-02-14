@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   imports = [
-    ./config/nvim
     ./config/zsh.nix
     ./config/kitty.nix
   ];
@@ -75,6 +74,7 @@
     rmtrash
     trash-cli
     nixpkgs-fmt
+    bonofiglio-nixvim
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
@@ -89,22 +89,6 @@
     ])
     bun
     deno
-
-    # LSPs
-    gotools
-    gopls
-    rust-analyzer
-    vscode-langservers-extracted
-    nodePackages.typescript-language-server
-    nodePackages.svelte-language-server
-    nodePackages.volar
-    nodePackages.dockerfile-language-server-nodejs
-    nodePackages.yaml-language-server
-    nodePackages.bash-language-server
-    docker-compose-language-service
-    lua-language-server
-    nil
-    emmet-ls
 
     # Databases
     sqlite

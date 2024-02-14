@@ -24,9 +24,11 @@
       url = "github:bonofiglio/nix-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    bonofiglio-nixvim.url = "github:bonofiglio/nixvim-config";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager, fenix, bonofiglio-overlay }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager, fenix, bonofiglio-overlay, bonofiglio-nixvim }:
     let
       inherit (darwin.lib) darwinSystem;
       inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
@@ -53,11 +55,14 @@
           home-manager.darwinModules.home-manager
           {
             nixpkgs = nixpkgsConfig;
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.daniel = import ./home.nix;
-            };
+            home-manager =
+              {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.daniel = {
+                  imports = [ ./home.nix ];
+                };
+              };
           }
           ./shortcuts.nix
         ];
@@ -80,7 +85,9 @@
         };
         fenix = inputs.fenix.overlays.default;
         custom-overlay = bonofiglio-overlay.overlays.default;
-        # neovim-nightly = neovim-nightly-overlay.overlay;
+        bonofiglio-nixvim = final: prev: {
+          bonofiglio-nixvim = bonofiglio-nixvim.outputs.packages."${prev.stdenv.system}".default;
+        };
       };
     };
 }
