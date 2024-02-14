@@ -2,6 +2,7 @@
 {
   imports = [
     ./config/zsh.nix
+    ./config/wezterm.nix
     ./config/kitty.nix
   ];
 
@@ -33,6 +34,8 @@
     qbittorrent
     height
     craft
+    dbeaver
+
     # hiddenbar
     # bitslicer
     blender
@@ -75,6 +78,11 @@
     trash-cli
     nixpkgs-fmt
     bonofiglio-nixvim
+    postgresql_16
+    pkg-config
+    libiconv
+    ali
+    nvd
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp

@@ -7,13 +7,14 @@
       return {
         color_scheme = "Catppuccin Mocha",
         window_padding = {
-          left = 0,
+          left = 5,
           right = 0,
-          top = 0,
+          top = 1,
           bottom = 0,
         },
-        font = wezterm.font("JetBrains Mono"),
-        font_size = 20,
+        font = wezterm.font("JetBrainsMonoNL Nerd Font", { weight = "DemiBold" }),
+        font_size = 20.5,
+        line_height = 1,
         adjust_window_size_when_changing_font_size = false,
         enable_kitty_keyboard = true,
         enable_scroll_bar = false,
@@ -79,14 +80,14 @@
             action = wezterm.action.ActivatePaneDirection("Down"),
           },
           {
-            key = 'F',
+            key = 'f',
             mods = 'CMD|SHIFT',
             action = wezterm.action.TogglePaneZoomState,
           },
           {
-            key = 'K',
+            key = 'k',
             mods = 'CMD',
-            action = act.ClearScrollback 'ScrollbackAndViewport',
+            action = wezterm.action.ClearScrollback 'ScrollbackAndViewport',
           },
         }
       }
