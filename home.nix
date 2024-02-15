@@ -102,6 +102,15 @@
     surrealdb
   ];
 
+  # zoxide
+  programs.zoxide = {
+    enable = true;
+    options = [
+      "--cmd cd"
+    ];
+    enableZshIntegration = true;
+  };
+
   # Git
   programs.git = {
     enable = true;
