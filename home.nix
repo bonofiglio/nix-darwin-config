@@ -82,6 +82,8 @@
     libiconv
     ali
     nvd
+    lldb_17
+    llvmPackages_17.libllvm
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
