@@ -101,7 +101,6 @@
 
     # Databases
     sqlite
-    surrealdb
   ];
 
   # zoxide
