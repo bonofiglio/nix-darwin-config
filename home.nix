@@ -35,6 +35,7 @@
     height
     craft
     dbeaver
+    battery
 
     # hiddenbar
     # bitslicer
