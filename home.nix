@@ -36,7 +36,7 @@
     craft
     dbeaver
     battery
-
+    moonlight-qt
     # hiddenbar
     # bitslicer
     blender
@@ -85,6 +85,7 @@
     nvd
     lldb_17
     llvmPackages_17.libllvm
+    rclone
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
