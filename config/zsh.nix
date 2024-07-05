@@ -12,6 +12,8 @@
       compinit -u
     '';
     initExtra = ''
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+
       source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.zsh
       # Replace the vi insert escape key with ^C by changing it to ^E and
       # changing it back to ^C when a command is executed

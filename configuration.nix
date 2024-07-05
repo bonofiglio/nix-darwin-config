@@ -112,4 +112,13 @@ in
 
   # Custom activation script
   system.activationScripts.extraUserActivation.text = "${defaults}";
+
+  homebrew = {
+    enable = true;
+    onActivation.cleanup = "uninstall";
+    brews = [
+      "rom-tools"
+      "b2-tools"
+    ];
+  };
 }
