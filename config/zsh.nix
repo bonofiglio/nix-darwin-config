@@ -8,7 +8,7 @@
       rm = "rmtrash";
     };
     completionInit = ''
-      autoload -U compinit 
+      autoload -U compinit
       compinit -u
     '';
     initExtra = ''
@@ -39,6 +39,18 @@
       bindkey -M vicmd '^[[B' history-substring-search-down
       bindkey -M vicmd 'k' history-substring-search-up
       bindkey -M vicmd 'j' history-substring-search-down
+
+      # Set prompt_char to '#' when the current user is root
+      function prompt_char {
+        if [[ $UID -eq 0 ]]; then
+          echo '#'
+        else
+          echo '❱'
+        fi
+      }
+
+      PROMPT="%B%F{red}%n%f%b%F{cyan}$(prompt_char)%F "
+      RPROMPT='%F{green}%~%f'
     '';
   };
 }
