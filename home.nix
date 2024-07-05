@@ -34,7 +34,6 @@
     qbittorrent
     height
     craft
-    dbeaver
     battery
     moonlight-qt
     # hiddenbar
@@ -86,12 +85,16 @@
     lldb_17
     llvmPackages_17.libllvm
     rclone
+    turso-cli
+    ninja
+    cmake
+    xdelta
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
     go
     nodejs_20
-    (fenix.stable.withComponents [
+    (fenix.latest.withComponents [
       "cargo"
       "clippy"
       "rust-src"
