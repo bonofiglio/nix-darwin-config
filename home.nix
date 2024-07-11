@@ -29,7 +29,6 @@
   home.packages = with pkgs; [
     # UI apps
     gimp
-    zoom-us
     discord
     qbittorrent
     height
@@ -45,9 +44,6 @@
     android-file-transfer
     obsidian
     anki-bin
-
-    # Web browsers
-    firefox
 
     # Window management
     rectangle
@@ -120,6 +116,7 @@
   # Git
   programs.git = {
     enable = true;
+    package = pkgs.stable.git;
     userEmail = "dev@dan.uy";
     userName = "Daniel Bonofiglio";
     extraConfig = {

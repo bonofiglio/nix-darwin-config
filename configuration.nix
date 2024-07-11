@@ -36,8 +36,7 @@ in
   programs.nix-index.enable = true;
 
   # Fonts
-  fonts.fontDir.enable = true;
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" ]; })
   ];
 
@@ -119,6 +118,11 @@ in
     brews = [
       "rom-tools"
       "b2-tools"
+    ];
+    casks = [
+      {
+        name = "firefox";
+      }
     ];
   };
 }

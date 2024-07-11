@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
 
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -28,17 +29,18 @@
     bonofiglio-nixvim.url = "github:bonofiglio/nixvim-config";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, darwin, home-manager, fenix, bonofiglio-overlay, bonofiglio-nixvim }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-stable, darwin, home-manager, fenix, bonofiglio-overlay, bonofiglio-nixvim }:
     let
       inherit (darwin.lib) darwinSystem;
       inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
+      system = "aarch64-darwin";
 
       # Configuration for `nixpkgs`
       nixpkgsConfig = {
         config = { allowUnfree = true; };
         overlays = attrValues self.overlays ++ singleton (
           # Sub in x86 version of packages that don't build on Apple Silicon yet
-          final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+          final: prev: (optionalAttrs (prev.stdenv.system == system) {
             inherit (final.pkgs-x86)
               idris2
               nix-index
@@ -66,7 +68,9 @@
           }
           ./shortcuts.nix
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+          inherit inputs;
+        };
       };
 
       overlays = {
@@ -75,8 +79,16 @@
           comma = import inputs.comma { inherit (prev) pkgs; };
         };
 
+        stable = final: prev: {
+          stable = import nixpkgs-stable
+            {
+              inherit system;
+              config.allowUnfree = true;
+            };
+        };
+
         # Overlay useful on Macs with Apple Silicon
-        apple-silicon = final: prev: optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+        apple-silicon = final: prev: optionalAttrs (prev.stdenv.system == system) {
           # Add access to x86 packages system is running Apple Silicon
           pkgs-x86 = import inputs.nixpkgs {
             system = "x86_64-darwin";
