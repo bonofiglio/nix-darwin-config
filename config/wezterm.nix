@@ -35,6 +35,21 @@
             action = wezterm.action.ActivateTabRelative(1),
           },
           {
+            key = ',',
+            mods = 'CTRL|SHIFT',
+            action = wezterm.action.MoveTabRelative(-1),
+          },
+          {
+            key = '.',
+            mods = 'CTRL|SHIFT',
+            action = wezterm.action.MoveTabRelative(1),
+          },
+          {
+            key = 'f',
+            mods = 'CMD|SHIFT',
+            action = wezterm.action.TogglePaneZoomState,
+          },
+          {
             key = 'h',
             mods = 'CMD|SHIFT',
             action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
@@ -78,11 +93,6 @@
             key = 'DownArrow',
             mods = 'CMD|SHIFT',
             action = wezterm.action.ActivatePaneDirection("Down"),
-          },
-          {
-            key = 'f',
-            mods = 'CMD|SHIFT',
-            action = wezterm.action.TogglePaneZoomState,
           },
           {
             key = 'k',
