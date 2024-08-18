@@ -32,7 +32,7 @@ in
               "tile-data" = {
                   "bundle-identifier" = "org.mozilla.firefox";
                   "file-data" =                 {
-                      "_CFURLString" = "file://$(realpath \"$HOME/Applications/Home Manager Apps/Firefox.app/\")";
+                      "_CFURLString" = "file:///System/Applications/Firefox.app/";
                       "_CFURLStringType" = 15;
                   };
                   "file-type" = 41;

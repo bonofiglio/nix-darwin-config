@@ -118,11 +118,22 @@ in
     brews = [
       "rom-tools"
       "b2-tools"
+      "mas"
     ];
     casks = [
+      "firefox"
+      "height"
+      "craft"
+      "discord"
       {
-        name = "firefox";
+        name = "librewolf";
+        args = { no_quarantine = true; };
       }
     ];
+    masApps = {
+      bitwarden = 1352778147;
+    };
   };
+
+  services.tailscale.enable = true;
 }

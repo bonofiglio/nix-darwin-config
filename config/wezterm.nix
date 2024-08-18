@@ -99,6 +99,11 @@
             mods = 'CMD',
             action = wezterm.action.ClearScrollback 'ScrollbackAndViewport',
           },
+          {
+            key = '0',
+            mods = 'CTRL',
+            action = wezterm.action.DisableDefaultAssignment,
+          }
         }
       }
     '';

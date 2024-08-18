@@ -29,10 +29,7 @@
   home.packages = with pkgs; [
     # UI apps
     gimp
-    discord
     qbittorrent
-    height
-    craft
     battery
     moonlight-qt
     # hiddenbar
@@ -44,6 +41,8 @@
     android-file-transfer
     obsidian
     anki-bin
+    feishin # Music player
+    audacity
 
     # Window management
     rectangle
@@ -85,12 +84,19 @@
     ninja
     cmake
     xdelta
+    wrk
+    xlsx2csv
+    devenv
+    iperf
+    mtr
+    gnugrep
+    netcat-gnu
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
     go
     nodejs_20
-    (fenix.latest.withComponents [
+    (fenix.stable.withComponents [
       "cargo"
       "clippy"
       "rust-src"
@@ -102,6 +108,7 @@
 
     # Databases
     sqlite
+    surrealdb
   ];
 
   # zoxide
@@ -116,7 +123,6 @@
   # Git
   programs.git = {
     enable = true;
-    package = pkgs.stable.git;
     userEmail = "dev@dan.uy";
     userName = "Daniel Bonofiglio";
     extraConfig = {
@@ -128,9 +134,6 @@
       };
     };
   };
-
-  # LazyGit
-  programs.lazygit.enable = true;
 
   # SSH
   programs.ssh = {

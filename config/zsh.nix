@@ -9,7 +9,17 @@
     };
     completionInit = ''
       autoload -U compinit
+      autoload -U colors && colors
+      zstyle ':completion:*' menu select
+
+      zmodload zsh/complist
+      bindkey -M menuselect 'h' vi-backward-char
+      bindkey -M menuselect 'k' vi-up-line-or-history
+      bindkey -M menuselect 'j' vi-down-line-or-history
+      bindkey -M menuselect 'l' vi-forward-char
+
       compinit -u
+      _comp_options+=(globdots) # include hidden files in completion
     '';
     initExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -51,7 +61,7 @@
         fi
       }
 
-      PROMPT="%B%F{red}%n%f%b%F{cyan}$(prompt_char)%F "
+      PROMPT="%B%F{red}%n%f%b%F{cyan}$(prompt_char)%f "
       RPROMPT='%F{green}%~%f'
     '';
   };
