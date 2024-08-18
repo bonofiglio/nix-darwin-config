@@ -91,6 +91,7 @@
     mtr
     gnugrep
     netcat-gnu
+    tart # Linux VMs in Apple Silicon
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
@@ -108,7 +109,6 @@
 
     # Databases
     sqlite
-    surrealdb
   ];
 
   # zoxide
