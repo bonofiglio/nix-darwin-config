@@ -92,6 +92,7 @@
     gnugrep
     netcat-gnu
     tart # Linux VMs in Apple Silicon
+    deploy-rs
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
