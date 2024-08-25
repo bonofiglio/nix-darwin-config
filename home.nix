@@ -4,6 +4,7 @@
     ./config/zsh.nix
     ./config/wezterm.nix
     ./config/kitty.nix
+    ./config/gh.nix
   ];
 
   home.stateVersion = "22.05";
@@ -93,6 +94,7 @@
     netcat-gnu
     tart # Linux VMs in Apple Silicon
     deploy-rs
+    act # Run GitHub actions locally
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
