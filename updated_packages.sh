@@ -10,12 +10,16 @@ referenceCommitHash="$1"
 
 if [ -z "$referenceCommitHash" ]; then
     referenceCommitHash="$(git rev-parse HEAD~1)"
+else
+    referenceCommitHash="$(git rev-parse "$referenceCommitHash")"
 fi
 
 newCommitHash="$2"
 
 if [ -z "$newCommitHash" ]; then
     newCommitHash="HEAD"
+else
+    newCommitHash="$(git rev-parse "$newCommitHash")"
 fi
 
 # Error when an unknown argument is provided
