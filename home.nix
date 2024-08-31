@@ -3,7 +3,6 @@
   imports = [
     ./config/zsh.nix
     ./config/wezterm.nix
-    ./config/kitty.nix
     ./config/gh.nix
   ];
 
