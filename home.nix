@@ -94,6 +94,7 @@
     tart # Linux VMs in Apple Silicon
     deploy-rs
     act # Run GitHub actions locally
+    sqlx-cli
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
