@@ -50,12 +50,12 @@
             action = wezterm.action.TogglePaneZoomState,
           },
           {
-            key = 'h',
+            key = 'v',
             mods = 'CMD|SHIFT',
             action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
           },
           {
-            key = 'v',
+            key = 'h',
             mods = 'CMD|SHIFT',
             action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
           },
