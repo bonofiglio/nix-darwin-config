@@ -53,7 +53,10 @@
     coreutils
     openssl
     pandoc # Document formatter
+    texliveSmall
     jq
+    jqp
+    yq
     ripgrep # Required for NeoVim plugins
     taplo # TOML toolkit
     tmux
@@ -95,11 +98,12 @@
     deploy-rs
     act # Run GitHub actions locally
     sqlx-cli
+    ttyplot
 
     # Languages
     llvmPackages_17.clang-unwrapped # Includes clangd lsp
     go
-    nodejs_20
+    nodejs_22
     (fenix.stable.withComponents [
       "cargo"
       "clippy"

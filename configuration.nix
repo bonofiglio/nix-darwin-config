@@ -126,6 +126,7 @@ in
       "height"
       "craft"
       "discord"
+      "handbrake"
       {
         name = "librewolf";
         args = { no_quarantine = true; };

@@ -23,6 +23,8 @@
         tab_bar_at_bottom = true,
         front_end = "WebGpu",
         scrollback_lines = 10000,
+        max_fps = 120,
+        animation_fps = 120,
         keys = {
           {
             key = 'LeftArrow',
