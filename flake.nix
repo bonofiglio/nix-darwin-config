@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
 
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -19,6 +19,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Latest zig
+    zig = {
+      url = "github:mitchellh/zig-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    zls = {
+      url = "github:zigtools/zls";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     bonofiglio-overlay = {
@@ -29,7 +39,7 @@
     bonofiglio-nixvim.url = "github:bonofiglio/nixvim-config";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-stable, darwin, home-manager, fenix, bonofiglio-overlay, bonofiglio-nixvim }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-stable, darwin, home-manager, fenix, bonofiglio-overlay, bonofiglio-nixvim, zig, zls }:
     let
       inherit (darwin.lib) darwinSystem;
       inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
@@ -96,6 +106,10 @@
           };
         };
         fenix = inputs.fenix.overlays.default;
+        zig = inputs.zig.overlays.default;
+        zls = final: prev: {
+          zls-latest = zls.outputs.packages."${prev.stdenv.system}".default;
+        };
         custom-overlay = bonofiglio-overlay.overlays.default;
         bonofiglio-nixvim = final: prev: {
           bonofiglio-nixvim = bonofiglio-nixvim.outputs.packages."${prev.stdenv.system}".default;

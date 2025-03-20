@@ -11,6 +11,8 @@
   # Set environment variables
   home.sessionVariables = {
     EDITOR = "nvim";
+    C_INCLUDE_PATH = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include";
+    CPLUS_INCLUDE_PATH = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include";
   };
 
   # Direnv, load and unload environment variables depending on the current directory.
@@ -49,6 +51,7 @@
     raycast
 
     # Terminal tools
+    neovim
     docker
     coreutils
     openssl
@@ -62,26 +65,23 @@
     tmux
     tmate
     nodePackages.pnpm
-    cargo-expand
+    nodePackages.yarn
     hyperfine # CLI benchmark
     m-cli # useful macOS CLI commands
     parallel
     ffmpeg
-    cargo-cross # Cross compilation tool for cargo
     colima # Docker starter
     lighttpd
     p7zip
     rmtrash
     trash-cli
     nixpkgs-fmt
-    bonofiglio-nixvim
-    postgresql_16
     pkg-config
     libiconv
     ali
     nvd
-    lldb_17
-    llvmPackages_17.libllvm
+    # llvmPackages_14.libllvm
+    # llvmPackages_14.bintools-unwrapped
     rclone
     turso-cli
     ninja
@@ -94,25 +94,28 @@
     mtr
     gnugrep
     netcat-gnu
-    tart # Linux VMs in Apple Silicon
     deploy-rs
-    act # Run GitHub actions locally
     sqlx-cli
     ttyplot
+    ollama
 
     # Languages
-    llvmPackages_17.clang-unwrapped # Includes clangd lsp
+    # llvmPackages_14.clang-unwrapped # Includes clangd lsp
+    zigpkgs.master
+    zls-latest
     go
     nodejs_22
-    (fenix.stable.withComponents [
+    (fenix.latest.withComponents [
       "cargo"
       "clippy"
       "rust-src"
       "rustc"
       "rustfmt"
+      "rustc-codegen-cranelift-preview"
     ])
     bun
     deno
+    uv # python packager in rust
 
     # Databases
     sqlite
@@ -130,6 +133,7 @@
   # Git
   programs.git = {
     enable = true;
+    package = pkgs.stable.git;
     userEmail = "dev@dan.uy";
     userName = "Daniel Bonofiglio";
     extraConfig = {

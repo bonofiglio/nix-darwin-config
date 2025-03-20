@@ -5,14 +5,17 @@ let
 in
 {
   # Nix configuration ------------------------------------------------------------------------------
+  nix.enable = true;
   nix.settings.trusted-users = [
     "@admin"
   ];
-  nix.configureBuildUsers = true;
   nixpkgs.hostPlatform = "aarch64-darwin";
   users.users.daniel.home = /Users/daniel;
   nix.settings.substituters = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
   system.stateVersion = 5;
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-31.7.7"
+  ];
 
   # Enable experimental nix command and flakes
   # nix.package = pkgs.nixUnstable;
@@ -26,9 +29,6 @@ in
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.zsh.enable = true;
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   # System-wide apps
   environment.systemPackages = with pkgs; [ ];
 
@@ -38,7 +38,8 @@ in
 
   # Fonts
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" ]; })
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
   ];
 
   # Keyboard
@@ -127,6 +128,10 @@ in
       "craft"
       "discord"
       "handbrake"
+      "ngrok"
+      "postman"
+      "microsoft-teams"
+      "thunderbird"
       {
         name = "librewolf";
         args = { no_quarantine = true; };
