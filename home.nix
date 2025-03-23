@@ -4,6 +4,9 @@
     ./config/zsh.nix
     ./config/wezterm.nix
     ./config/gh.nix
+    # Requires build to be done with path-type, since it's excluded from git
+    # darwin-rebuild switch --flake path:.
+    ./private
   ];
 
   home.stateVersion = "22.05";
@@ -151,6 +154,7 @@
     enable = true;
     matchBlocks = {
       "github.com" = {
+        hostname = "github.com";
         identityFile = "~/.ssh/id_ed25519";
         extraOptions = {
           "AddKeysToAgent" = "yes";
