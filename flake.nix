@@ -37,9 +37,14 @@
     };
 
     bonofiglio-nixvim.url = "github:bonofiglio/nixvim-config";
+
+    tmux-catppuccin = {
+      url = "github:catppuccin/tmux";
+      flake = false;
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-stable, darwin, home-manager, fenix, bonofiglio-overlay, bonofiglio-nixvim, zig, zls }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-stable, darwin, home-manager, fenix, bonofiglio-overlay, bonofiglio-nixvim, zig, zls, tmux-catppuccin }:
     let
       inherit (darwin.lib) darwinSystem;
       inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
@@ -95,6 +100,16 @@
               inherit system;
               config.allowUnfree = true;
             };
+        };
+
+        tmux-custom-plugins = final: prev: {
+          tmuxCustomPlugins = {
+            catppuccin = prev.tmuxPlugins.mkTmuxPlugin {
+              pluginName = "catppuccin";
+              version = tmux-catppuccin.rev;
+              src = tmux-catppuccin;
+            };
+          };
         };
 
         # Overlay useful on Macs with Apple Silicon

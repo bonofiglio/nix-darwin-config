@@ -124,7 +124,6 @@ in
     ];
     casks = [
       "firefox"
-      "height"
       "craft"
       "discord"
       "handbrake"

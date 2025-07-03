@@ -4,6 +4,7 @@
     ./config/zsh.nix
     ./config/wezterm.nix
     ./config/gh.nix
+    ./config/tmux.nix
     # Requires build to be done with path-type, since it's excluded from git
     # darwin-rebuild switch --flake path:.
     ./private
@@ -26,8 +27,7 @@
 
   # Htop
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.htop.enable
-  programs.htop.enable = true;
-  programs.htop.settings.show_program_path = true;
+  programs.btop.enable = true;
 
   programs.nix-index.enable = true;
 
@@ -55,7 +55,11 @@
 
     # Terminal tools
     neovim
+    helix
+    podman
+    colima
     docker
+    docker-compose
     coreutils
     openssl
     pandoc # Document formatter
@@ -65,7 +69,6 @@
     yq
     ripgrep # Required for NeoVim plugins
     taplo # TOML toolkit
-    tmux
     tmate
     nodePackages.pnpm
     nodePackages.yarn
@@ -73,7 +76,6 @@
     m-cli # useful macOS CLI commands
     parallel
     ffmpeg
-    colima # Docker starter
     lighttpd
     p7zip
     rmtrash
@@ -81,7 +83,7 @@
     nixpkgs-fmt
     pkg-config
     libiconv
-    ali
+    stable.ali
     nvd
     # llvmPackages_14.libllvm
     # llvmPackages_14.bintools-unwrapped
@@ -101,6 +103,7 @@
     sqlx-cli
     ttyplot
     ollama
+    tmuxifier
 
     # Languages
     # llvmPackages_14.clang-unwrapped # Includes clangd lsp
@@ -115,6 +118,7 @@
       "rustc"
       "rustfmt"
       "rustc-codegen-cranelift-preview"
+      "rust-analyzer"
     ])
     bun
     deno
