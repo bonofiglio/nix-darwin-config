@@ -143,6 +143,10 @@ in
     ];
     casks = [
       "firefox"
+      "slack"
+      "linear-linear"
+      "1password"
+      "granola"
       "craft"
       "discord"
       "handbrake-app"
