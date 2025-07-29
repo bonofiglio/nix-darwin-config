@@ -1,19 +1,30 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  tmuxPackage = pkgs.tmux.overrideAttrs (old: {
+    version = "git"; # usually harmless to omit
+    src = pkgs.fetchFromGitHub {
+      owner = "tmux";
+      repo = "tmux";
+      rev = "7e439539377e272f37d18bb10dbff374b87acee6";
+      hash = "sha256-YY9CJ2Z6hjC4kGjRswlps4hya5Lk/ksM9luJHW8Cags=";
+    };
+  });
+in
 {
   programs.tmux = {
     enable = true;
+    package = tmuxPackage;
     keyMode = "vi";
     extraConfig = ''
       # Set the prefix to a more comfy keybind (split keyboard only)
       set -g prefix C-a
       # Enable noob mode
       set -g mouse on
-      # Vendor lock-in
-      set -g default-terminal "xterm-ghostty"
+      set -g default-terminal "xterm-256color"
 
       # Enable fancy terminal stuff
       set -s extended-keys on
-      set -as terminal-features 'xterm*:extkeys'
+      set -as terminal-features 'xterm*:extended-keys'
       set -g focus-events on
 
       # Extend history limit
@@ -31,6 +42,7 @@
 
       # Adds control before normal tmux bindings
       bind-key C-w choose-window
+      bind-key C-s choose-session
       bind-key C-x confirm-before -p "kill-window #W? (y/n)" kill-window
       bind-key C-c new-window
     '';

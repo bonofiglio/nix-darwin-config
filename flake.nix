@@ -44,25 +44,50 @@
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-stable, darwin, home-manager, fenix, bonofiglio-overlay, bonofiglio-nixvim, zig, zls, tmux-catppuccin }:
+  outputs =
+    inputs@{
+      self,
+      nix-darwin,
+      nixpkgs,
+      nixpkgs-stable,
+      darwin,
+      home-manager,
+      fenix,
+      bonofiglio-overlay,
+      bonofiglio-nixvim,
+      zig,
+      zls,
+      tmux-catppuccin,
+    }:
     let
       inherit (darwin.lib) darwinSystem;
-      inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
+      inherit (inputs.nixpkgs.lib)
+        attrValues
+        makeOverridable
+        optionalAttrs
+        singleton
+        ;
       system = "aarch64-darwin";
 
       # Configuration for `nixpkgs`
       nixpkgsConfig = {
-        config = { allowUnfree = true; };
-        overlays = attrValues self.overlays ++ singleton (
-          # Sub in x86 version of packages that don't build on Apple Silicon yet
-          final: prev: (optionalAttrs (prev.stdenv.system == system) {
-            inherit (final.pkgs-x86)
-              idris2
-              nix-index
-              niv
-              purescript;
-          })
-        );
+        config = {
+          allowUnfree = true;
+        };
+        overlays =
+          attrValues self.overlays
+          ++ singleton (
+            # Sub in x86 version of packages that don't build on Apple Silicon yet
+            final: prev:
+            (optionalAttrs (prev.stdenv.system == system) {
+              inherit (final.pkgs-x86)
+                idris2
+                nix-index
+                niv
+                purescript
+                ;
+            })
+          );
       };
     in
     {
@@ -72,14 +97,13 @@
           home-manager.darwinModules.home-manager
           {
             nixpkgs = nixpkgsConfig;
-            home-manager =
-              {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.daniel = {
-                  imports = [ ./home.nix ];
-                };
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.daniel = {
+                imports = [ ./home.nix ];
               };
+            };
           }
           ./shortcuts.nix
         ];
@@ -95,11 +119,10 @@
         };
 
         stable = final: prev: {
-          stable = import nixpkgs-stable
-            {
-              inherit system;
-              config.allowUnfree = true;
-            };
+          stable = import nixpkgs-stable {
+            inherit system;
+            config.allowUnfree = true;
+          };
         };
 
         tmux-custom-plugins = final: prev: {
@@ -113,13 +136,15 @@
         };
 
         # Overlay useful on Macs with Apple Silicon
-        apple-silicon = final: prev: optionalAttrs (prev.stdenv.system == system) {
-          # Add access to x86 packages system is running Apple Silicon
-          pkgs-x86 = import inputs.nixpkgs {
-            system = "x86_64-darwin";
-            inherit (nixpkgsConfig) config;
+        apple-silicon =
+          final: prev:
+          optionalAttrs (prev.stdenv.system == system) {
+            # Add access to x86 packages system is running Apple Silicon
+            pkgs-x86 = import inputs.nixpkgs {
+              system = "x86_64-darwin";
+              inherit (nixpkgsConfig) config;
+            };
           };
-        };
         fenix = inputs.fenix.overlays.default;
         zig = inputs.zig.overlays.default;
         zls = final: prev: {
@@ -132,5 +157,3 @@
       };
     };
 }
-
-

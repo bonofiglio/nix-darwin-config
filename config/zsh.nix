@@ -21,7 +21,7 @@
       compinit -u
       _comp_options+=(globdots) # include hidden files in completion
     '';
-    initExtra = ''
+    initContent = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
 
       source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.zsh

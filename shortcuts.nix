@@ -280,7 +280,7 @@ in
       };
     in
     {
-      system.activationScripts.postUserActivation.text = ''
+      system.activationScripts."setup_shortcuts".text = lib.stringAfter [ "users" ] ''
         # Configuring system shortcuts
         "${updateShortcuts}" "${shortcutsSpec}"
         # https://zameermanji.com/blog/2021/6/8/applying-com-apple-symbolichotkeys-changes-instantaneously/

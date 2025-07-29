@@ -1,16 +1,31 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   # Imports
   defaults = import ./defaults;
 in
 {
   # Nix configuration ------------------------------------------------------------------------------
-  nix.enable = true;
+  nix.enable = false;
   nix.settings.trusted-users = [
     "@admin"
   ];
   nixpkgs.hostPlatform = "aarch64-darwin";
+
   users.users.daniel.home = /Users/daniel;
+  environment.shells = [
+    pkgs.bashInteractive
+    pkgs.zsh
+    config.home-manager.users.daniel.programs.nushell.package
+  ];
+  # Set nushell as default shell
+  users.users.daniel.shell = config.home-manager.users.daniel.programs.nushell.package;
+
+  system.primaryUser = "daniel";
   nix.settings.substituters = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
   system.stateVersion = 5;
   nixpkgs.config.permittedInsecurePackages = [
@@ -19,12 +34,14 @@ in
 
   # Enable experimental nix command and flakes
   # nix.package = pkgs.nixUnstable;
-  nix.extraOptions = ''
-    auto-optimise-store = true
-    experimental-features = nix-command flakes
-  '' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
-    extra-platforms = x86_64-darwin aarch64-darwin
-  '';
+  nix.extraOptions =
+    ''
+      auto-optimise-store = true
+      experimental-features = nix-command flakes
+    ''
+    + lib.optionalString (pkgs.system == "aarch64-darwin") ''
+      extra-platforms = x86_64-darwin aarch64-darwin
+    '';
 
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.zsh.enable = true;
@@ -72,16 +89,17 @@ in
   # MacOS garbage
   system.defaults.spaces.spans-displays = false;
 
+  system.defaults.finder = {
+    ShowExternalHardDrivesOnDesktop = true;
+    ShowHardDrivesOnDesktop = true;
+    ShowMountedServersOnDesktop = true;
+    ShowRemovableMediaOnDesktop = true;
+    _FXSortFoldersFirst = true;
+    # When performing a search, search the current folder by default
+    FXDefaultSearchScope = "SCcf";
+  };
+
   system.defaults.CustomUserPreferences = {
-    "com.apple.finder" = {
-      ShowExternalHardDrivesOnDesktop = true;
-      ShowHardDrivesOnDesktop = true;
-      ShowMountedServersOnDesktop = true;
-      ShowRemovableMediaOnDesktop = true;
-      _FXSortFoldersFirst = true;
-      # When performing a search, search the current folder by default
-      FXDefaultSearchScope = "SCcf";
-    };
     "com.apple.desktopservices" = {
       # Avoid creating .DS_Store files on network or USB volumes
       DSDontWriteNetworkStores = true;
@@ -112,7 +130,7 @@ in
   };
 
   # Custom activation script
-  system.activationScripts.extraUserActivation.text = "${defaults}";
+  system.activationScripts."set_defaults".text = lib.stringAfter [ "users" ] "${defaults}";
 
   homebrew = {
     enable = true;
@@ -121,19 +139,25 @@ in
       "rom-tools"
       "b2-tools"
       "mas"
+      "showkey"
     ];
     casks = [
       "firefox"
       "craft"
       "discord"
-      "handbrake"
+      "handbrake-app"
       "ngrok"
       "postman"
       "microsoft-teams"
       "thunderbird"
+      "qbittorrent"
+      "ghostty"
+      "utm"
       {
         name = "librewolf";
-        args = { no_quarantine = true; };
+        args = {
+          no_quarantine = true;
+        };
       }
     ];
     masApps = {

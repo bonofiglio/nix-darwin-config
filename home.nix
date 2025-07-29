@@ -1,10 +1,13 @@
 { pkgs, ... }:
 {
   imports = [
-    ./config/zsh.nix
-    ./config/wezterm.nix
     ./config/gh.nix
+    ./config/ghostty.nix
+    ./config/jujutsu.nix
+    ./config/nushell.nix
     ./config/tmux.nix
+    ./config/wezterm.nix
+    ./config/zsh.nix
     # Requires build to be done with path-type, since it's excluded from git
     # darwin-rebuild switch --flake path:.
     ./private
@@ -17,6 +20,7 @@
     EDITOR = "nvim";
     C_INCLUDE_PATH = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include";
     CPLUS_INCLUDE_PATH = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include";
+    SHELL = "nu";
   };
 
   # Direnv, load and unload environment variables depending on the current directory.
@@ -33,8 +37,6 @@
 
   home.packages = with pkgs; [
     # UI apps
-    gimp
-    qbittorrent
     battery
     moonlight-qt
     # hiddenbar
@@ -43,7 +45,6 @@
     unar # Unarchiver
     vscode # Live share has me by the b
     vlc
-    android-file-transfer
     obsidian
     anki-bin
     feishin # Music player
@@ -80,13 +81,11 @@
     p7zip
     rmtrash
     trash-cli
-    nixpkgs-fmt
+    nixfmt-rfc-style
     pkg-config
     libiconv
     stable.ali
     nvd
-    # llvmPackages_14.libllvm
-    # llvmPackages_14.bintools-unwrapped
     rclone
     turso-cli
     ninja
@@ -104,9 +103,11 @@
     ttyplot
     ollama
     tmuxifier
+    act # Github actions runner
+    evcxr # Rust REPL
+    sops
 
     # Languages
-    # llvmPackages_14.clang-unwrapped # Includes clangd lsp
     zigpkgs.master
     zls-latest
     go
@@ -122,7 +123,7 @@
     ])
     bun
     deno
-    uv # python packager in rust
+    uv # python packager built with rust
 
     # Databases
     sqlite
@@ -131,9 +132,6 @@
   # zoxide
   programs.zoxide = {
     enable = true;
-    options = [
-      "--cmd cd"
-    ];
     enableZshIntegration = true;
   };
 
