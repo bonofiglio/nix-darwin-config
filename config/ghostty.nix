@@ -16,7 +16,6 @@ let
 in
 {
   programs.ghostty = {
-    #
     enable = false;
     enableZshIntegration = true;
     settings = {
