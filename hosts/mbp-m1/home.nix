@@ -1,0 +1,56 @@
+{
+  pkgs,
+  ...
+}:
+{
+  imports = [
+    ../../users/daniel
+    ../../private
+  ];
+
+  home.stateVersion = "22.05";
+
+  home.packages = with pkgs; [
+    # UI apps
+    battery
+    moonlight-qt
+    unar # Unarchiver
+    vlc
+    obsidian
+    anki-bin
+    feishin
+
+    # Window management
+    rectangle
+    raycast
+
+    # Terminal tools
+    podman
+    colima
+    docker
+    docker-compose
+    nodePackages.pnpm
+    nodePackages.yarn
+    hyperfine
+    m-cli
+    ffmpeg
+    rmtrash
+    trash-cli
+    gnugrep
+    deploy-rs
+    tmuxifier
+    sops
+
+    # Languages
+    nodejs_22
+    (fenix.latest.withComponents [
+      "cargo"
+      "clippy"
+      "rust-src"
+      "rustc"
+      "rustfmt"
+      "rustc-codegen-cranelift-preview"
+      "rust-analyzer"
+    ])
+  ];
+}

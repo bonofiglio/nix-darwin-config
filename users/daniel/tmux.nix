@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 let
   tmuxPackage = pkgs.tmux.overrideAttrs (old: {
     version = "git"; # usually harmless to omit
@@ -61,8 +61,8 @@ in
           set -ag status-right "#{E:@catppuccin_status_session}"
         '';
       }
-      tmuxPlugins.vim-tmux-navigator
       tmuxPlugins.better-mouse-mode
+      tmuxPlugins.vim-tmux-navigator
     ];
   };
 }

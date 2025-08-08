@@ -1,18 +1,24 @@
-# Code from https://github.com/LnL7/nix-darwin/pull/699
+# Modified code from https://github.com/LnL7/nix-darwin/pull/699
 # Remove when integrated into nix-darwin
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib) attrsets lists options types;
+  inherit (lib)
+    attrsets
+    lists
+    options
+    types
+    ;
 
   cfg = config.system.keyboard.shortcuts;
 
   modNames = attrsets.genAttrs [ "shift" "control" "option" "command" ] (x: x);
-
-  # NOTE:
-  # What comes below does not seem to be documented, so these are merely
-  # reverse-engineered guesses.
 
   # /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/IOKit.framework/Headers/hidsystem/IOLLEvent.h
   modMasks = {
@@ -103,7 +109,6 @@ let
     "f2" = 120; # 0x78
     "f1" = 122; # 0x7A
 
-
     "keypad." = 65; # 0x41
     "keypad*" = 67; # 0x43
     "keypad+" = 69; # 0x45
@@ -124,13 +129,15 @@ let
     "keypad9" = 92; # 0x5C
   };
 
-  modsOptions = attrsets.genAttrs (attrsets.attrNames modNames) (modName:
+  modsOptions = attrsets.genAttrs (attrsets.attrNames modNames) (
+    modName:
     options.mkOption {
       type = types.bool;
       default = false;
       example = true;
       description = "Use the `${modName}` modifier in the combination";
-    });
+    }
+  );
 
   shortcutOptions = id: enable: mods: key: {
     id = options.mkOption {
@@ -161,7 +168,8 @@ let
     };
   };
 
-  mkShortcut = id: description: enable: mods: key:
+  mkShortcut =
+    id: description: enable: mods: key:
     options.mkOption {
       inherit description;
       type = types.submodule { options = shortcutOptions id enable mods key; };
@@ -178,40 +186,43 @@ let
       '';
     };
 
-  encodeShortcut = config:
+  encodeShortcut =
+    config:
     let
-      reverseLookup = val:
+      reverseLookup =
+        val:
         let
           keys = builtins.attrNames keyCodes;
           matchingKeys = builtins.filter (k: keyCodes.${k} == val) keys;
         in
         if matchingKeys == [ ] then null else builtins.head matchingKeys;
 
-      # TODO: this is brittle, probably incorrect and based on this comment https://stackoverflow.com/a/23318003 
-      # > It is the ascii code of the letter on the key, or -1 (65535) if there is no ascii code. Note that letters are lowercase, so D is 100 (lowercase d).
-      # > Sometimes a key that would normally have an ascii code uses 65535 instead. This appears to happen when the control key modifier is used, for example with hot keys for specific spaces.
-      keyCodeToAscii = config:
+      keyCodeToAscii =
+        config:
         let
           code = config.key;
           mods = config.mods;
-          isAsciish = code: (code >=  0 && code < 36)
-            || (code >= 37 && code < 48)
-            || (code == 50);
+          isAsciish = code: (code >= 0 && code < 36) || (code >= 37 && code < 48) || (code == 50);
         in
         # Apart from the control modifier, it seems that for instance command option d is 65535
-          # deal with ascii-ish keycodes and convert them to an ascii code.
+        # deal with ascii-ish keycodes and convert them to an ascii code.
         if (!mods.control && !(mods.command && mods.option) && isAsciish code) then
           (lib.strings.charToInt (lib.strings.toLower (reverseLookup code)))
         # "return"
-        else if (!mods.control && code == 36) then 10
+        else if (!mods.control && code == 36) then
+          10
         # "tab"
-        else if (!mods.control && code == 48) then 9
+        else if (!mods.control && code == 48) then
+          9
         # "space"
-        else if (!mods.control && code == 49) then 32
+        else if (!mods.control && code == 49) then
+          32
         # "delete"
-        else if (!mods.control && code == 51) then 127
+        else if (!mods.control && code == 51) then
+          127
         # assume (probably incorrectly) that the rest map to the magic code 65535
-        else 65535;
+        else
+          65535;
 
     in
     {
@@ -228,13 +239,12 @@ let
               (lists.foldl' lib.add 0)
             ])
           ];
-          type = "standard"; # No idea what other possible values are
+          type = "standard";
         };
       };
     };
 
-  encodeShortcuts = shortcuts:
-    builtins.toJSON (builtins.listToAttrs (map encodeShortcut shortcuts));
+  encodeShortcuts = shortcuts: builtins.toJSON (builtins.listToAttrs (map encodeShortcut shortcuts));
 in
 {
   options.system.keyboard.shortcuts = with modNames; {
@@ -246,8 +256,6 @@ in
     };
 
     spotlight = {
-      # search = mkShortcut 64 "Show Spotlight search" true [command] "space";
-      # until I learn how to override this correctly
       search = mkShortcut 64 "Show Spotlight search" false [ command ] "space";
       finderSearch = mkShortcut 65 "Show Finder search" false [ option command ] "space";
     };
@@ -255,10 +263,6 @@ in
 
   config =
     let
-      # The shortcuts plist uses nested dicts and updating those is _really_
-      # tricky without having a real programming language at hand.
-      # In particular, `defaults` can’t make sure the nested types are correct
-      # and PlistBuddy cannot do “update or create”.
       updateShortcuts = pkgs.writeScript "updateShortcuts.py" ''
         #!${pkgs.python3.interpreter}
         import json
@@ -279,7 +283,7 @@ in
         text = encodeShortcuts (attrsets.collect (s: s ? id) cfg);
       };
     in
-    {
+    lib.mkIf cfg.enable {
       system.activationScripts."setup_shortcuts".text = lib.stringAfter [ "users" ] ''
         # Configuring system shortcuts
         "${updateShortcuts}" "${shortcutsSpec}"

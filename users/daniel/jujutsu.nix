@@ -8,6 +8,7 @@
         name = "Daniel Bonofiglio";
       };
       ui.paginate = "never";
+      ui.editor = "nvim --noplugin";
     };
   };
 }

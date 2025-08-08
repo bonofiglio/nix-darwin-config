@@ -1,5 +1,7 @@
 { pkgs, lib, ... }:
 let
+  e = lib.getExe;
+
   userConfig = ''
     $env.config.edit_mode = 'vi'
     $env.config.history.max_size = 50000
@@ -26,16 +28,16 @@ let
       }
 
       # ESC sucks
-      {
-        name: exit_insert_mode_with_ctrl_c
-        modifier: control
-        keycode: char_c
-        mode: vi_insert
-        event: {
-          send: vichangemode
-          mode: normal
-        }
-      }
+      # {
+      #   name: exit_insert_mode_with_ctrl_c
+      #   modifier: control
+      #   keycode: char_c
+      #   mode: vi_insert
+      #   event: {
+      #     send: vichangemode
+      #     mode: normal
+      #   }
+      # }
 
       # Vi motions for completions
       {
@@ -106,7 +108,7 @@ let
 
   completerConfig = ''
     let fish_completer = {|spans|
-        ${pkgs.fish}/bin/fish --command $"complete '--do-complete=($spans | str replace --all "'" "\\'" | str join ' ')'"
+        ${e pkgs.fish} --command $"complete '--do-complete=($spans | str replace --all "'" "\\'" | str join ' ')'"
         | from tsv --flexible --noheaders --no-infer
         | rename value description
         | update value {|row|
@@ -120,7 +122,7 @@ let
     }
 
     let carapace_completer = {|spans: list<string>|
-        ${pkgs.carapace}/bin/carapace $spans.0 nushell ...$spans
+        ${e pkgs.carapace} $spans.0 nushell ...$spans
         | from json
         | if ($in | default [] | where value =~ '^-.*ERR$' | is-empty) { $in } else { null }
     }
@@ -232,7 +234,6 @@ let
       hash = "sha256-KQe1fssvx53WgGjotJTQhF2eiDullGPjiRQeaf0DDYA=";
     };
 
-    useFetchCargoVendor = true;
     cargoHash = "sha256-T9uyLuS4TvTC5Jyc1izddmtNlqIPdB5Yqi9yzVI8POw=";
 
     nativeBuildInputs = [
@@ -291,7 +292,7 @@ in
 {
   programs.nushell = {
     enable = true;
-    package = bonofiglioNushell;
+    # package = bonofiglioNushell;
     configFile.text = ''
       ${userConfig}
       ${keybindings}
