@@ -140,6 +140,7 @@ in
       "b2-tools"
       "mas"
       "showkey"
+      "stripe-cli"
     ];
     casks = [
       "firefox"
