@@ -6,6 +6,18 @@
 }:
 let
   yabai = "${pkgs.yabai}/bin/yabai";
+  e = lib.getExe;
+  apps = {
+    chat = "open -n /Applications/Discord.app";
+    term = "${e pkgs.wezterm}";
+    browser = "open -n /Applications/Firefox.app";
+    work-chat = "open -n /Applications/Slack.app";
+    tasks = "open -n /Applications/Linear.app";
+    work-browser = "open -n '/Applications/Google Chrome.app'";
+    music = "${e pkgs.feishin}";
+    db = "open -n '/Applications/Postico 2.app'";
+    notes = "${e pkgs.obsidian}";
+  };
 in
 {
   xdg.configFile."skhd/skhdrc" = {
@@ -13,6 +25,20 @@ in
     executable = true;
     text = ''
       # alt + a / u / o / s are blocked due to umlaute
+
+      # launch apps
+      alt - q : ${apps.chat}
+      alt - w : ${apps.term}
+      alt - e : ${apps.browser}
+      alt - r : ${apps.work-chat}
+      alt - t : ${apps.tasks}
+      alt - y : ${apps.work-browser}
+      alt - u : ${apps.music}
+      alt - i : ${apps.db}
+      alt - o : ${apps.notes}
+
+      # close apps
+      alt - c : ${yabai} -m window --close
 
       # change space
       alt - 1 : ${yabai} -m space --focus 1
@@ -38,7 +64,7 @@ in
       shift + alt - l : ${yabai} -m window --swap east
 
       # toggle floating
-      alt - v : ${yabai} -m window --toggle float --grid 10:10:1:1:8:8
+      alt - v : ${yabai} -m window --toggle float --grid 10:10:2:1:6:8
 
       # toggle full screen
       alt - f : ${yabai} -m window --toggle zoom-fullscreen

@@ -21,7 +21,7 @@ in
       ${yabai} -m config window_placement          second_child
       ${yabai} -m config window_insertion_point    focused
       ${yabai} -m config window_zoom_persist       on
-      ${yabai} -m config window_shadow             on
+      ${yabai} -m config window_shadow             off
       ${yabai} -m config window_animation_duration 0.15
       ${yabai} -m config window_animation_easing   ease_out_circ
       ${yabai} -m config window_opacity_duration   0.1
@@ -70,9 +70,9 @@ in
     '';
 
     onChange = ''
-      /bin/launchctl bootout gui/$(id -u daniel) ${config.home.homeDirectory}/Library/LaunchAgents/org.nix-community.home.${agentName}.plist || true
+      /bin/launchctl bootout gui/$(id -u ${config.home.username}) ${config.home.homeDirectory}/Library/LaunchAgents/org.nix-community.home.${agentName}.plist 2> /dev/null || true
       pkill yabai || true
-      /bin/launchctl bootstrap gui/$(id -u daniel) ${config.home.homeDirectory}/Library/LaunchAgents/org.nix-community.home.${agentName}.plist
+      /bin/launchctl bootstrap gui/$(id -u ${config.home.username}) ${config.home.homeDirectory}/Library/LaunchAgents/org.nix-community.home.${agentName}.plist 2> /dev/null
       sudo ${yabai} --load-sa
     '';
   };

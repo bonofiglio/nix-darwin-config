@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  darwinConfig,
+  ...
+}:
 let
   cfg = config.programs.sketchybar;
 in
@@ -6,13 +11,15 @@ in
   programs.sketchybar = {
     enable = true;
     config = {
-      # TODO: replace with flake path
-      source = config.lib.file.mkOutOfStoreSymlink "/Users/daniel/.config/nix-darwin-config/users/daniel/sketchybar/config";
+      source = ./config;
       recursive = true;
     };
     configType = "lua";
   };
 
+  launchd.agents.sketchybar.config.EnvironmentVariables = {
+    PATH = "${darwinConfig.environment.systemPath}:${config.home.homeDirectory}/.nix-profile/bin:/etc/profiles/per-user/${config.home.username}/bin";
+  };
   launchd.agents.sketchybar.config.Program = lib.mkOverride 10 null;
   launchd.agents.sketchybar.config.ProgramArguments = lib.mkOverride 10 [
     "/bin/sh"

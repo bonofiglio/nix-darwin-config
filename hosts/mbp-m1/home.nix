@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -22,8 +21,7 @@
     anki-bin
     feishin
 
-    # Window management
-    rectangle
+    # Holy grail
     raycast
 
     # Terminal tools
@@ -42,6 +40,7 @@
     deploy-rs
     tmuxifier
     sops
+    darwin-rebuild
 
     # Languages
     nodejs_22

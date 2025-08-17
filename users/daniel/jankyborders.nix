@@ -8,9 +8,9 @@ let
   agentName = "jankyborders";
   settings = {
     style = "round";
-    width = 4.0;
+    width = 5.0;
     hidpi = "on";
-    active_color = "0xff89b4fa";
+    active_color = "'glow(0xff89b4fa)'";
     inactive_color = "0x00000000";
     ax_focus = false;
   };
@@ -40,8 +40,8 @@ in
       ${lib.getExe pkgs.jankyborders} "''${options[@]}"
     '';
     onChange = ''
-      /bin/launchctl bootout gui/$(id -u daniel) ${config.home.homeDirectory}/Library/LaunchAgents/org.nix-community.home.${agentName}.plist
-      /bin/launchctl bootstrap gui/$(id -u daniel) ${config.home.homeDirectory}/Library/LaunchAgents/org.nix-community.home.${agentName}.plist
+      /bin/launchctl bootout gui/$(id -u ${config.home.username}) ${config.home.homeDirectory}/Library/LaunchAgents/org.nix-community.home.${agentName}.plist
+      /bin/launchctl bootstrap gui/$(id -u ${config.home.username}) ${config.home.homeDirectory}/Library/LaunchAgents/org.nix-community.home.${agentName}.plist
     '';
   };
 }

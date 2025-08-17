@@ -30,6 +30,7 @@ let
         };
       };
     custom-overlay = inputs.bonofiglio-overlay.overlays.default;
+    nix-darwin = inputs.nix-darwin.overlays.default;
   };
 
   overlays = {

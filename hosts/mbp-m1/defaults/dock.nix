@@ -108,6 +108,7 @@ in
   }"
 
   defaults write com.apple.dock persistent-others "<array></array>"
+  defaults write com.apple.dock expose-group-apps -bool true
 
-  pkill Dock
+  killall Dock
 ''

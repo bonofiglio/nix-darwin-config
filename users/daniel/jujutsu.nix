@@ -9,6 +9,7 @@
       };
       ui.paginate = "never";
       ui.editor = "nvim --noplugin";
+      revsets.log = "@ | ancestors(trunk()..(visible_heads() & mine()), 2) | trunk()";
     };
   };
 }
