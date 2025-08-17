@@ -20,6 +20,15 @@
   users.users.daniel.shell = pkgs.zsh;
 
   programs.zsh.enable = true;
+
+  environment.etc."sudoers.d/darwin-rebuild".source = pkgs.runCommand "sudoers-darwin-rebuild" { } ''
+    DARWIN_REBUILD_BIN="${pkgs.darwin-rebuild}/bin/darwin-rebuild"
+    SHASUM=$(sha256sum "$DARWIN_REBUILD_BIN" | cut -d' ' -f1)
+    cat <<EOF >"$out"
+    %admin ALL=(root) NOPASSWD: sha256:$SHASUM $DARWIN_REBUILD_BIN switch *
+    EOF
+  '';
+
   environment.etc."sudoers.d/yabai".source = pkgs.runCommand "sudoers-yabai" { } ''
     YABAI_BIN="${pkgs.yabai}/bin/yabai"
     SHASUM=$(sha256sum "$YABAI_BIN" | cut -d' ' -f1)
