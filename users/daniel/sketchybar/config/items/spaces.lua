@@ -88,7 +88,7 @@ for i = 1, 10, 1 do
 			space_popup:set({ background = { image = "space." .. env.SID } })
 			space:set({ popup = { drawing = "toggle" } })
 		elseif env.BUTTON == "left" then
-			sbar.exec("/run/current-system/sw/bin/yabai -m space --focus " .. env.SID)
+			sbar.exec("yabai -m space --focus " .. env.SID)
 		end
 	end)
 
