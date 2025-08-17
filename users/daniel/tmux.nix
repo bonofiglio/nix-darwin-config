@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   tmuxPackage = pkgs.tmux.overrideAttrs (old: {
     version = "git"; # usually harmless to omit
@@ -21,6 +21,8 @@ in
       # Enable noob mode
       set -g mouse on
       set -g default-terminal "xterm-256color"
+
+      set -g default-shell ${lib.getExe pkgs.nushell}
 
       # Enable fancy terminal stuff
       set -s extended-keys on

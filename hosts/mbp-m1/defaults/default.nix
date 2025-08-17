@@ -5,7 +5,7 @@ let
 in
 {
   # Menu bar
-  system.defaults.NSGlobalDomain._HIHideMenuBar = false;
+  system.defaults.NSGlobalDomain._HIHideMenuBar = true;
 
   # Mouse
   system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = false; # Whoose idea was to set this to true by default?

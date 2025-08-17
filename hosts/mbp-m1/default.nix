@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   ...
 }:
@@ -14,19 +13,26 @@
 
   users.users.daniel.home = /Users/daniel;
 
-  # Set nushell as default shell
   environment.shells = [
     pkgs.zsh
-    config.home-manager.users.daniel.programs.nushell.package
+    pkgs.nushell
   ];
-  users.users.daniel.shell = config.home-manager.users.daniel.programs.nushell.package;
+  users.users.daniel.shell = pkgs.zsh;
 
   programs.zsh.enable = true;
+  environment.etc."sudoers.d/yabai".source = pkgs.runCommand "sudoers-yabai" { } ''
+    YABAI_BIN="${pkgs.yabai}/bin/yabai"
+    SHASUM=$(sha256sum "$YABAI_BIN" | cut -d' ' -f1)
+    cat <<EOF >"$out"
+    %admin ALL=(root) NOPASSWD: sha256:$SHASUM $YABAI_BIN --load-sa
+    EOF
+  '';
 
   # Fonts
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
+    sketchybar-app-font
   ];
 
   system.primaryUser = "daniel";
@@ -58,6 +64,8 @@
       "qbittorrent"
       "ghostty"
       "utm"
+      "visual-studio-code"
+      "zed"
       {
         name = "librewolf";
         args = {
@@ -69,6 +77,22 @@
       bitwarden = 1352778147;
     };
   };
+
+  # Disable safe mode key for FireFox
+  launchd.agents.disable-firefox-safe-mode-key = {
+    serviceConfig = {
+      ProgramArguments = [
+        "/bin/launchctl"
+        "setenv"
+        "MOZ_DISABLE_SAFE_MODE_KEY"
+        "1"
+      ];
+      RunAtLoad = true;
+      ServiceIPC = false;
+    };
+  };
+
+  services.skhd.enable = false;
 
   home-manager = {
     useGlobalPkgs = true;

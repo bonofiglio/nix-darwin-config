@@ -1,5 +1,7 @@
 {
+  config,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -53,4 +55,20 @@
       "rust-analyzer"
     ])
   ];
+
+  launchd.agents.raycast = {
+    enable = true;
+    config = {
+      ProgramArguments = [
+        "/bin/sh"
+        "-c"
+        "/bin/wait4path ${pkgs.raycast} && exec open ${pkgs.raycast}/Applications/Raycast.app"
+      ];
+      ProcessType = "Interactive";
+      KeepAlive = false;
+      RunAtLoad = true;
+      StandardOutPath = "${config.home.homeDirectory}/Library/Logs/raycast/raycast.out.log";
+      StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/raycast/raycast.err.log";
+    };
+  };
 }

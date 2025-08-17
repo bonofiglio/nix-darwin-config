@@ -109,5 +109,5 @@ in
 
   defaults write com.apple.dock persistent-others "<array></array>"
 
-  killall Dock
+  pkill Dock
 ''

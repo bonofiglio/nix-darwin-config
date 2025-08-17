@@ -1,10 +1,11 @@
-{ ... }:
+{ pkgs, lib, ... }:
 {
   programs.wezterm = {
     enable = true;
     enableZshIntegration = true;
     extraConfig = ''
       return {
+        default_prog = { '${lib.getExe pkgs.nushell}' },
         color_scheme = "Catppuccin Mocha",
         window_padding = {
           left = 5,
@@ -12,7 +13,9 @@
           top = 1,
           bottom = 0,
         },
-        font = wezterm.font("JetBrainsMonoNL Nerd Font", { weight = "DemiBold" }),
+        window_decorations = "RESIZE",
+        window_background_opacity = 0.95,
+        font = wezterm.font("JetBrainsMonoNL Nerd Font", { weight = "Regular" }),
         font_size = 20.5,
         line_height = 1,
         adjust_window_size_when_changing_font_size = false,

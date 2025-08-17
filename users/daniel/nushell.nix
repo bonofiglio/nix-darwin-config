@@ -14,6 +14,11 @@ let
       vi_normal: block
       emacs: line
     }
+
+    # Nix run shortcut
+    def n [name: string] {
+      nix run $"nixpkgs#($name)"
+    }
   '';
 
   keybindings = ''

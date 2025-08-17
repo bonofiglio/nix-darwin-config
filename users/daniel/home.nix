@@ -26,6 +26,8 @@ in
   home.packages =
     with pkgs;
     [
+      btop
+      parallel
       coreutils
       fzf
       jq
