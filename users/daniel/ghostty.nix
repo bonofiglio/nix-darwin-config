@@ -5,18 +5,22 @@
   ...
 }:
 let
+  inherit (pkgs.stdenv) isDarwin;
+
   keyValueSettings = {
     listsAsDuplicateKeys = true;
     mkKeyValue = lib.generators.mkKeyValueDefault { } " = ";
   };
   keyValue = pkgs.formats.keyValue keyValueSettings;
+
+  ghosttyBin = if isDarwin then "/opt/homebrew/bin/ghostty" else pkgs.ghostty;
+
   validate =
-    file:
-    "/opt/homebrew/bin/ghostty +validate-config --config-file=${config.xdg.configHome}/ghostty/${file}";
+    file: "${ghosttyBin} +validate-config --config-file=${config.xdg.configHome}/ghostty/${file}";
 in
 {
   programs.ghostty = {
-    enable = false;
+    enable = !isDarwin;
     enableZshIntegration = true;
     settings = {
       theme = "catppuccin-mocha";

@@ -8,6 +8,7 @@
     ../../modules/darwin-shortcuts.nix
   ];
 
+  nix.enable = false;
   nixpkgs.hostPlatform = "aarch64-darwin";
   system.stateVersion = 5;
 
@@ -122,6 +123,9 @@
   };
 
   services.skhd.enable = false;
+
+  # Keyboard
+  system.keyboard.enableKeyMapping = true;
 
   home-manager = {
     useGlobalPkgs = true;

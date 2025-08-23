@@ -6,6 +6,10 @@
 {
   imports = [
     ../../users/daniel
+    ../../users/daniel/jankyborders.nix
+    ../../users/daniel/sketchybar
+    ../../users/daniel/skhd.nix
+    ../../users/daniel/yabai.nix
     ../../private
   ];
 

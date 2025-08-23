@@ -6,16 +6,31 @@
 }:
 {
   # Nix configuration ------------------------------------------------------------------------------
-  nix.enable = false;
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  nix.enable = true;
   nix.settings.trusted-users = [
     "@admin"
   ];
-
   nixpkgs.config.allowUnfree = true;
 
   environment.shells = [
     pkgs.bashInteractive
   ];
+
+  environment.systemPackages = with pkgs; [
+    vim
+    neovim
+    tmux
+    git
+  ];
+
+  environment.variables = {
+    EDITOR = "vim";
+    VISUAL = "vim";
+  };
 
   nix.settings.substituters = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
   # Use the same nixpkgs version always to avoid redownloding each time
