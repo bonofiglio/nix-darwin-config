@@ -302,8 +302,8 @@ in
       ${userConfig}
       ${keybindings}
       ${completerConfig}
-      ${environmentVariables}
     '';
+    # ${environmentVariables}
   };
 
   programs.carapace = {

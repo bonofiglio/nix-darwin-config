@@ -9,7 +9,7 @@
     enable = true;
 
     xkb = {
-      layout = "us";
+      layout = "us,es";
       variant = "";
     };
   };
@@ -17,22 +17,30 @@
   # Hyprland pog
   programs.hyprland = {
     enable = true;
-    withUWSM = false;
+    withUWSM = true;
     xwayland.enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage =
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
+  environment.systemPackages = with pkgs; [
+    hyprpaper
+    hyprshot
+    caelestia-shell
+    caelestia-cli
+
+    (fenix.latest.withComponents [
+      "cargo"
+      "clippy"
+      "rust-src"
+      "rustc"
+      "rustfmt"
+      "rustc-codegen-cranelift-preview"
+      "rust-analyzer"
+    ])
+  ];
+
   # Optional, hint electron apps to use wayland:
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  # Audio
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 }

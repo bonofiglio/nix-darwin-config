@@ -1,7 +1,7 @@
 name: system: inputs:
 let
   inherit (inputs.nixpkgs.lib) optionalAttrs attrValues;
-  inherit (inputs.nixpkgs.legacyPackages.${system}.stdenv) isDarwin;
+  inherit (inputs.nixpkgs.legacyPackages.${system}.stdenv) isDarwin isLinux;
 
   stableNixpkgs = if isDarwin then inputs.nixpkgs-stable-darwin else inputs.nixpkgs-stable;
 
@@ -15,6 +15,7 @@ let
 
   custLib = {
     ifDarwinAttrs = optionalAttrs isDarwin;
+    ifLinuxAttrs = optionalAttrs isLinux;
     toXml = import ./toXml.nix;
   };
 
@@ -31,6 +32,17 @@ let
       };
     custom-overlay = inputs.bonofiglio-overlay.overlays.default;
     nix-darwin = inputs.nix-darwin.overlays.default;
+  };
+
+  linuxOverlays = {
+    caelestia = final: prev: {
+      caelestia-shell = inputs.caelestia-shell.packages.${system}.with-cli;
+      caelestia-cli = inputs.caelestia-cli.packages.${system}.default;
+    };
+
+    local = final: prev: {
+      smc-lid = final.callPackage ../packages/smc-lid/pkg.nix { };
+    };
   };
 
   overlays = {
@@ -60,6 +72,8 @@ let
   specialArgs = {
     inherit inputs;
     inherit custLib;
+
+    flakeRoot = import ../.flakeroot.nix;
   };
 in
 {
@@ -68,7 +82,9 @@ in
       ../configuration.nix
       {
         nixpkgs.hostPlatform = system;
-        nixpkgs.overlays = attrValues (overlays // custLib.ifDarwinAttrs darwinOverlays);
+        nixpkgs.overlays = attrValues (
+          overlays // custLib.ifDarwinAttrs darwinOverlays // custLib.ifLinuxAttrs linuxOverlays
+        );
       }
       home-manager.home-manager
       {

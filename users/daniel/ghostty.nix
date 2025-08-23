@@ -13,7 +13,7 @@ let
   };
   keyValue = pkgs.formats.keyValue keyValueSettings;
 
-  ghosttyBin = if isDarwin then "/opt/homebrew/bin/ghostty" else pkgs.ghostty;
+  ghosttyBin = if isDarwin then "/opt/homebrew/bin/ghostty" else lib.getExe pkgs.ghostty;
 
   validate =
     file: "${ghosttyBin} +validate-config --config-file=${config.xdg.configHome}/ghostty/${file}";
@@ -28,6 +28,7 @@ in
       font-style = "semibold";
       font-size = 21;
       cursor-text = "#070707";
+      background-opacity = 0.9;
       # See https://web.archive.org/web/20250109041625/https://invisible-island.net/xterm/modified-keys-gb-altgr-intl.html
       # For virtual key codes (7=55, 8=56)
       keybind = [
@@ -36,7 +37,7 @@ in
         "performable:ctrl+9=csi:27;5;57~"
         "performable:ctrl+0=csi:27;5;48~"
       ];
-      command = "${config.programs.nushell.package}/bin/nu";
+      command = "/bin/sh -c ${config.programs.nushell.package}/bin/nu";
     };
   };
 

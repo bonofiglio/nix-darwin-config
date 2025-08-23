@@ -36,6 +36,7 @@ in
       openssl
       rclone
       ripgrep
+      gcc
       sqlx-cli
     ]
     # Bitwarden CLI is currently broken on darwin
@@ -67,7 +68,7 @@ in
       "github.com" = {
         hostname = "github.com";
         identityFile = "~/.ssh/id_ed25519";
-        extraOptions = {
+        extraOptions = ifDarwinAttrs {
           "AddKeysToAgent" = "yes";
           "UseKeychain" = "yes";
         };

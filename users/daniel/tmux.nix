@@ -22,6 +22,9 @@ in
       set -g mouse on
       set -g default-terminal "xterm-256color"
 
+      # Make status bar respect transparency
+      set -g status-style bg=default
+
       set -g default-shell ${lib.getExe pkgs.nushell}
 
       # Enable fancy terminal stuff

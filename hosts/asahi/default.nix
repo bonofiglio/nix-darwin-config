@@ -64,6 +64,17 @@
   security.sudo = {
     enable = true;
     wheelNeedsPassword = true;
+    extraRules = [
+      {
+        commands = [
+          {
+            command = "${pkgs.smc-lid}/bin/smc-lid";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+        groups = [ "wheel" ];
+      }
+    ];
   };
 
   # Define server account
@@ -89,6 +100,8 @@
   # packages
   environment.systemPackages = with pkgs; [
     xdg-desktop-portal-hyprland
+    yazi
+    smc-lid
   ];
 
   system.stateVersion = "25.11";

@@ -33,6 +33,14 @@
       url = "github:catppuccin/tmux";
       flake = false;
     };
+
+    caelestia-shell.url = "github:caelestia-dots/shell";
+    caelestia-shell.inputs.nixpkgs.follows = "nixpkgs";
+    caelestia-cli.url = "github:caelestia-dots/cli";
+    caelestia-cli.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-snapd.url = "github:nix-community/nix-snapd";
+    nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
