@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
@@ -8,7 +9,8 @@
     ../../modules/darwin-shortcuts.nix
   ];
 
-  nix.enable = false;
+  nix.enable = lib.mkForce false;
+
   nixpkgs.hostPlatform = "aarch64-darwin";
   system.stateVersion = 5;
 
@@ -133,6 +135,10 @@
 
     users.daniel = {
       imports = [ ./home.nix ];
+    };
+
+    users.clanker = {
+      imports = [ ../../users/clanker ];
     };
   };
 }
