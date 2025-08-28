@@ -11,13 +11,33 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
   system.stateVersion = 5;
 
-  users.users.daniel.home = /Users/daniel;
+  users.users.clanker = {
+    name = "clanker";
+    description = "AI agents user";
+    createHome = true;
+    isHidden = false;
+    home = /Users/clanker;
+    shell = pkgs.zsh;
+    uid = 420;
+  };
+  users.knownUsers = [ "clanker" ];
+  users.knownGroups = [ "clanker" ];
+
+  users.groups.clanker = {
+    name = "clanker";
+    members = [ "clanker" ];
+    gid = 420;
+  };
+
+  users.users.daniel = {
+    home = /Users/daniel;
+    shell = pkgs.zsh;
+  };
 
   environment.shells = [
     pkgs.zsh
     pkgs.nushell
   ];
-  users.users.daniel.shell = pkgs.zsh;
 
   programs.zsh.enable = true;
 
@@ -106,6 +126,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+
     users.daniel = {
       imports = [ ./home.nix ];
     };
