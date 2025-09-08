@@ -47,7 +47,6 @@
     darwin-rebuild
 
     # Languages
-    nodejs_22
     (fenix.latest.withComponents [
       "cargo"
       "clippy"

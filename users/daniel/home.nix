@@ -10,8 +10,16 @@ let
 in
 {
   # Direnv, load and unload environment variables depending on the current directory.
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+
+    config.global.log_filter = "^loading";
+
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    enableNushellIntegration = true;
+  };
 
   # Set environment variables
   home.sessionVariables = {
