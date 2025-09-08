@@ -14,29 +14,6 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
   system.stateVersion = 5;
 
-  users.users.clanker = {
-    name = "clanker";
-    description = "AI agents user";
-    createHome = true;
-    isHidden = false;
-    home = /Users/clanker;
-    shell = pkgs.zsh;
-    uid = 420;
-  };
-  users.knownUsers = [ "clanker" ];
-  users.knownGroups = [ "clanker" ];
-
-  users.groups.clanker = {
-    name = "clanker";
-    members = [ "clanker" ];
-    gid = 420;
-  };
-
-  users.users.daniel = {
-    home = /Users/daniel;
-    shell = pkgs.zsh;
-  };
-
   environment.shells = [
     pkgs.zsh
     pkgs.nushell
@@ -44,14 +21,14 @@
 
   programs.zsh.enable = true;
 
-  environment.etc."sudoers.d/darwin-rebuild".source = pkgs.runCommand "sudoers-darwin-rebuild" { } ''
-    DARWIN_REBUILD_BIN="${pkgs.darwin-rebuild}/bin/darwin-rebuild"
-    SHASUM=$(sha256sum "$DARWIN_REBUILD_BIN" | cut -d' ' -f1)
-    cat <<EOF >"$out"
-    %admin ALL=(root) NOPASSWD: sha256:$SHASUM $DARWIN_REBUILD_BIN switch *
-    EOF
-  '';
-
+  # environment.etc."sudoers.d/darwin-rebuild".source = pkgs.runCommand "sudoers-darwin-rebuild" { } ''
+  #   DARWIN_REBUILD_BIN="${pkgs.darwin-rebuild}/bin/darwin-rebuild"
+  #   SHASUM=$(sha256sum "$DARWIN_REBUILD_BIN" | cut -d' ' -f1)
+  #   cat <<EOF >"$out"
+  #   %admin ALL=(root) NOPASSWD: sha256:$SHASUM $DARWIN_REBUILD_BIN switch *
+  #   EOF
+  # '';
+  #
   environment.etc."sudoers.d/yabai".source = pkgs.runCommand "sudoers-yabai" { } ''
     YABAI_BIN="${pkgs.yabai}/bin/yabai"
     SHASUM=$(sha256sum "$YABAI_BIN" | cut -d' ' -f1)
@@ -59,6 +36,10 @@
     %admin ALL=(root) NOPASSWD: sha256:$SHASUM $YABAI_BIN --load-sa
     EOF
   '';
+
+  # Add 'lab' nameserver from tailscale to be able to access domains defined in adguard such as
+  # adguard.lab, homarr.lab, etc.
+  environment.etc."resolver/lab".text = "nameserver 100.100.100.100";
 
   # Fonts
   fonts.packages = with pkgs; [
@@ -72,6 +53,7 @@
   homebrew = {
     enable = true;
     onActivation.cleanup = "uninstall";
+    onActivation.upgrade = true;
     brews = [
       "ali"
       "rom-tools"
@@ -79,6 +61,7 @@
       "showkey"
       "stripe-cli"
       "bitwarden-cli"
+      "qemu"
     ];
     casks = [
       "firefox"
@@ -129,16 +112,14 @@
   # Keyboard
   system.keyboard.enableKeyMapping = true;
 
+  users.users.daniel.home = "/Users/daniel";
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
 
     users.daniel = {
+      home.homeDirectory = "/Users/daniel";
       imports = [ ./home.nix ];
-    };
-
-    users.clanker = {
-      imports = [ ../../users/clanker ];
     };
   };
 }

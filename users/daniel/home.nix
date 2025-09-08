@@ -57,9 +57,9 @@ in
   programs.git = {
     enable = true;
     package = pkgs.stable.git;
-    userEmail = "dev@dan.uy";
-    userName = "Daniel Bonofiglio";
-    extraConfig = {
+    settings = {
+      user.email = "dev@dan.uy";
+      user.name = "Daniel Bonofiglio";
       init.defaultBranch = "main";
       # Always use SSH clone to avoid permission issues
       url = {
@@ -70,9 +70,30 @@ in
     };
   };
 
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
+    git.diffToolMode = true;
+    options.color = "always";
+  };
+
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     matchBlocks = {
+      "*" = {
+        forwardAgent = false;
+        addKeysToAgent = "yes";
+        compression = false;
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+        hashKnownHosts = false;
+        userKnownHostsFile = "~/.ssh/known_hosts";
+        controlMaster = "no";
+        controlPath = "~/.ssh/master-%r@%n:%p";
+        controlPersist = "no";
+      };
+
       "github.com" = {
         hostname = "github.com";
         identityFile = "~/.ssh/id_ed25519";

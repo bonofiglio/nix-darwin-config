@@ -33,10 +33,18 @@
   };
 
   nix.settings.substituters = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
+
   # Use the same nixpkgs version always to avoid redownloding each time
   nix.nixPath = [
-    "nixpkgs=${inputs.nixpkgs.outPath}"
+    "nixpkgs=${inputs.nixpkgs}"
   ];
+  nix.registry.nixpkgs = {
+    from = {
+      id = "nixpkgs";
+      type = "indirect";
+    };
+    flake = inputs.nixpkgs;
+  };
 
   nix.extraOptions = ''
     auto-optimise-store = true
