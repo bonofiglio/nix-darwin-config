@@ -2,6 +2,7 @@
   config,
   lib,
   darwinConfig,
+  flakeRoot,
   ...
 }:
 let
@@ -11,7 +12,7 @@ in
   programs.sketchybar = {
     enable = true;
     config = {
-      source = ./config;
+      source = config.lib.file.mkOutOfStoreSymlink "${flakeRoot}/users/daniel/sketchybar/config";
       recursive = true;
     };
     configType = "lua";
