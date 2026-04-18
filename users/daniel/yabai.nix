@@ -14,7 +14,7 @@ in
     text = ''
       ${yabai} -m config external_bar              all:40:0
       ${yabai} -m config menubar_opacity           1.0
-      ${yabai} -m config mouse_follows_focus       on
+      ${yabai} -m config mouse_follows_focus       off
       ${yabai} -m config focus_follows_mouse       autoraise
       ${yabai} -m config display_arrangement_order default
       ${yabai} -m config window_origin_display     default
@@ -44,11 +44,6 @@ in
       ${yabai} -m config mouse_drop_action         swap
 
       ${yabai} -m signal --add event=dock_did_restart action="/usr/bin/sudo ${yabai} --load-sa"
-
-      # bar configuration
-      ${yabai} -m signal --add event=window_focused   action="${pkgs.sketchybar}/bin/sketchybar --trigger window_focus"
-      ${yabai} -m signal --add event=window_created   action="${pkgs.sketchybar}/bin/sketchybar --trigger windows_on_spaces"
-      ${yabai} -m signal --add event=window_destroyed action="${pkgs.sketchybar}/bin/sketchybar --trigger windows_on_spaces"
 
       # rules
       ${yabai} -m rule --add app="^System Settings$"    manage=off

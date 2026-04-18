@@ -14,7 +14,7 @@ let
     work-chat = "open -n /Applications/Slack.app";
     tasks = "open -n /Applications/Linear.app";
     work-browser = "open -n '/Applications/Google Chrome.app'";
-    music = "${e pkgs.feishin}";
+    music = "${e pkgs.unstable.feishin}";
     db = "open -n '/Applications/Postico 2.app'";
     notes = "${e pkgs.obsidian}";
   };

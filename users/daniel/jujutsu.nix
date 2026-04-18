@@ -1,4 +1,7 @@
-{ ... }:
+{ config, lib, ... }:
+let
+  difftCommand = lib.getExe config.programs.difftastic.package;
+in
 {
   programs.jujutsu = {
     enable = true;
@@ -10,7 +13,7 @@
       ui.paginate = "never";
       ui.editor = "nvim --noplugin";
       ui.diff-formatter = [
-        "difft"
+        difftCommand
         "--color=always"
         "$left"
         "$right"

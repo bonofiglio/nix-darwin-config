@@ -36,7 +36,7 @@ let
     }
 
     def --wrapped ns [name: string, ...args: string] {
-      let nixpkgs = "${inputs.nixpkgs-stable.outPath}"
+      let nixpkgs = "${inputs.nixpkgs.outPath}"
 
       if ($name | str contains "/") {
         let parts = ($name | split row "/")
@@ -62,16 +62,16 @@ let
       }
 
       # ESC sucks
-      # {
-      #   name: exit_insert_mode_with_ctrl_c
-      #   modifier: control
-      #   keycode: char_c
-      #   mode: vi_insert
-      #   event: {
-      #     send: vichangemode
-      #     mode: normal
-      #   }
-      # }
+      {
+        name: exit_insert_mode_with_ctrl_c
+        modifier: control
+        keycode: char_c
+        mode: vi_insert
+        event: {
+          send: vichangemode
+          mode: normal
+        }
+      }
 
       # Vi motions for completions
       {
@@ -191,83 +191,15 @@ let
       completer: $external_completer
     }
   '';
-
-  bonofiglioNushell = pkgs.rustPlatform.buildRustPackage {
-    pname = "nushell";
-    version = "bonofiglio";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "bonofiglio";
-      repo = "nushell";
-      rev = "8d6abc3212ebc8de0226222ee57d7dbfba5659fd";
-      hash = "sha256-KQe1fssvx53WgGjotJTQhF2eiDullGPjiRQeaf0DDYA=";
-    };
-
-    cargoHash = "sha256-T9uyLuS4TvTC5Jyc1izddmtNlqIPdB5Yqi9yzVI8POw=";
-
-    nativeBuildInputs = [
-      pkgs.pkg-config
-      pkgs.rustPlatform.bindgenHook
-    ];
-
-    buildInputs = [
-      pkgs.openssl
-      pkgs.zstd
-      pkgs.zlib
-      pkgs.nghttp2
-      pkgs.libgit2
-    ];
-
-    buildFeatures = [ ];
-
-    checkPhase = ''
-      runHook preCheck
-      (
-        # The skipped tests all fail in the sandbox because in the nushell test playground,
-        # the tmp $HOME is not set, so nu falls back to looking up the passwd dir of the build
-        # user (/var/empty). The assertions however do respect the set $HOME.
-        set -x
-        HOME=$(mktemp -d) cargo test -j $NIX_BUILD_CORES --offline -- \
-          --test-threads=$NIX_BUILD_CORES \
-          --skip=repl::test_config_path::test_default_config_path \
-          --skip=repl::test_config_path::test_xdg_config_bad \
-          --skip=repl::test_config_path::test_xdg_config_empty
-      )
-      runHook postCheck
-    '';
-
-    checkInputs = [
-      pkgs.curlMinimal
-    ];
-
-    passthru = {
-      shellPath = "/bin/nu";
-    };
-
-    meta = with lib; {
-      description = "Modern shell written in Rust";
-      homepage = "https://www.nushell.sh/";
-      license = licenses.mit;
-      maintainers = with maintainers; [
-        Br1ght0ne
-        johntitor
-        joaquintrinanes
-        ryan4yin
-      ];
-      mainProgram = "nu";
-    };
-  };
 in
 {
   programs.nushell = {
     enable = true;
-    # package = bonofiglioNushell;
     configFile.text = ''
       ${userConfig}
       ${keybindings}
       ${completerConfig}
     '';
-    # ${environmentVariables}
   };
 
   programs.carapace = {

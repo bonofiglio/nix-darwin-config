@@ -2,31 +2,29 @@
   description = "Daniels-MacBook-Pro";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/a683adc19ff5228af548c6539dbc3440509bfed3";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nixpkgs-stable-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    nix-darwin.url = "github:LnL7/nix-darwin/master";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    darwin.url = "github:lnl7/nix-darwin/master";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Input for rust toolchain
     fenix = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     bonofiglio-overlay = {
       url = "github:bonofiglio/nix-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     tmux-catppuccin = {
@@ -35,12 +33,12 @@
     };
 
     caelestia-shell.url = "github:caelestia-dots/shell";
-    caelestia-shell.inputs.nixpkgs.follows = "nixpkgs";
+    caelestia-shell.inputs.nixpkgs.follows = "nixpkgs-unstable";
     caelestia-cli.url = "github:caelestia-dots/cli";
-    caelestia-cli.inputs.nixpkgs.follows = "nixpkgs";
+    caelestia-cli.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     nix-snapd.url = "github:nix-community/nix-snapd";
-    nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
+    nix-snapd.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs =

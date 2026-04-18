@@ -37,9 +37,11 @@
     EOF
   '';
 
-  # Add 'lab' nameserver from tailscale to be able to access domains defined in adguard such as
+  # Add lab nameservers from tailscale to be able to access domains defined in adguard such as
   # adguard.lab, homarr.lab, etc.
   environment.etc."resolver/lab".text = "nameserver 100.100.100.100";
+  environment.etc."resolver/orbis".text = "nameserver 100.100.100.100";
+  environment.etc."resolver/vega".text = "nameserver 100.100.100.100";
 
   # Fonts
   fonts.packages = with pkgs; [
@@ -56,37 +58,26 @@
     onActivation.upgrade = true;
     brews = [
       "ali"
-      "rom-tools"
       "mas"
       "showkey"
-      "stripe-cli"
       "bitwarden-cli"
       "qemu"
+      "cliproxyapi"
     ];
     casks = [
+      "battery"
       "firefox"
       "slack"
       "linear-linear"
       "1password"
       "granola"
-      "craft"
       "discord"
-      "handbrake-app"
       "ngrok"
       "postman"
-      "microsoft-teams"
       "thunderbird"
       "qbittorrent"
       "ghostty"
-      "utm"
       "visual-studio-code"
-      "zed"
-      {
-        name = "librewolf";
-        args = {
-          no_quarantine = true;
-        };
-      }
     ];
     masApps = {
       bitwarden = 1352778147;

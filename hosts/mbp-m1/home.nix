@@ -17,24 +17,20 @@
 
   home.packages = with pkgs; [
     # UI apps
-    battery
     moonlight-qt
     unar # Unarchiver
     vlc
     obsidian
     anki-bin
-    feishin
 
     # Holy grail
     raycast
 
     # Terminal tools
     podman
-    colima
+    unstable.colima
     docker
     docker-compose
-    nodePackages.pnpm
-    nodePackages.yarn
     hyperfine
     m-cli
     ffmpeg
@@ -45,17 +41,6 @@
     tmuxifier
     sops
     darwin-rebuild
-
-    # Languages
-    (fenix.latest.withComponents [
-      "cargo"
-      "clippy"
-      "rust-src"
-      "rustc"
-      "rustfmt"
-      "rustc-codegen-cranelift-preview"
-      "rust-analyzer"
-    ])
   ];
 
   launchd.agents.raycast = {

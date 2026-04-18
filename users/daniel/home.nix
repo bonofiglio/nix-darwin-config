@@ -56,7 +56,7 @@ in
 
   programs.git = {
     enable = true;
-    package = pkgs.stable.git;
+    package = pkgs.git;
     settings = {
       user.email = "dev@dan.uy";
       user.name = "Daniel Bonofiglio";

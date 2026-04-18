@@ -22,6 +22,9 @@ in
       set -g mouse on
       set -g default-terminal "xterm-256color"
 
+      # Reorder windows when closing windows to avoid crippling depression and gaps in the numbers
+      set-option -g renumber-windows on
+
       # Make status bar respect transparency
       set -g status-style bg=default
 

@@ -1,9 +1,7 @@
 name: system: inputs:
 let
-  inherit (inputs.nixpkgs.lib) optionalAttrs attrValues;
   inherit (inputs.nixpkgs.legacyPackages.${system}.stdenv) isDarwin isLinux;
-
-  stableNixpkgs = if isDarwin then inputs.nixpkgs-stable-darwin else inputs.nixpkgs-stable;
+  inherit (inputs.nixpkgs.lib) optionalAttrs attrValues;
 
   hostConfig = ../hosts/${name};
 
@@ -51,8 +49,8 @@ let
       comma = import inputs.comma { inherit (prev) pkgs; };
     };
 
-    stable = final: prev: {
-      stable = import stableNixpkgs {
+    unstable = final: prev: {
+      unstable = import inputs.nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       };
@@ -73,7 +71,7 @@ let
     inherit inputs;
     inherit custLib;
 
-    flakeRoot = import ../.flakeroot.nix;
+    flakeRoot = (import ../.flakeroot.nix);
   };
 in
 {
