@@ -1,29 +1,18 @@
 {
   pkgs,
-  lib,
   config,
   ...
 }:
 let
   inherit (pkgs.stdenv) isDarwin;
-
-  keyValueSettings = {
-    listsAsDuplicateKeys = true;
-    mkKeyValue = lib.generators.mkKeyValueDefault { } " = ";
-  };
-  keyValue = pkgs.formats.keyValue keyValueSettings;
-
-  ghosttyBin = if isDarwin then "/opt/homebrew/bin/ghostty" else lib.getExe pkgs.ghostty;
-
-  validate =
-    file: "${ghosttyBin} +validate-config --config-file=${config.xdg.configHome}/ghostty/${file}";
 in
 {
   programs.ghostty = {
-    enable = !isDarwin;
+    enable = true;
+    package = if isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
     enableZshIntegration = true;
     settings = {
-      theme = "catppuccin-mocha";
+      theme = "TokyoNight Storm";
       font-family = "JetBrainsMonoNL Nerd Font Mono";
       font-style = "semibold";
       font-size = 21;
@@ -37,14 +26,6 @@ in
         "performable:ctrl+9=csi:27;5;57~"
         "performable:ctrl+0=csi:27;5;48~"
       ];
-      command = "/bin/sh -c ${config.programs.nushell.package}/bin/nu";
-    };
-  };
-
-  xdg.configFile = {
-    "ghostty/config" = {
-      source = keyValue.generate "ghostty-config" config.programs.ghostty.settings;
-      onChange = validate "config";
     };
   };
 }
