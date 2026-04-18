@@ -1,19 +1,7 @@
 { pkgs, lib, ... }:
-let
-  tmuxPackage = pkgs.tmux.overrideAttrs (old: {
-    version = "git"; # usually harmless to omit
-    src = pkgs.fetchFromGitHub {
-      owner = "tmux";
-      repo = "tmux";
-      rev = "7e439539377e272f37d18bb10dbff374b87acee6";
-      hash = "sha256-YY9CJ2Z6hjC4kGjRswlps4hya5Lk/ksM9luJHW8Cags=";
-    };
-  });
-in
 {
   programs.tmux = {
     enable = true;
-    package = tmuxPackage;
     keyMode = "vi";
     extraConfig = ''
       # Set the prefix to a more comfy keybind (split keyboard only)
@@ -53,6 +41,11 @@ in
       bind-key C-s choose-session
       bind-key C-x confirm-before -p "kill-window #W? (y/n)" kill-window
       bind-key C-c new-window
+
+      # Set new panes and splits to open in current directory
+      bind c new-window -c "#{pane_current_path}"
+      bind '"' split-window -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
     '';
     plugins = with pkgs; [
       {
