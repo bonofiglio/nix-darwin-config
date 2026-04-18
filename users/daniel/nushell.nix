@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   inputs,
@@ -6,6 +7,9 @@
 }:
 let
   e = lib.getExe;
+  jj = e config.programs.jujutsu.package;
+  carapace = e config.programs.carapace.package;
+  fish = e pkgs.fish;
 
   userConfig = ''
     $env.config.edit_mode = 'vi'
@@ -142,7 +146,7 @@ let
 
   completerConfig = ''
     let fish_completer = {|spans|
-        ${e pkgs.fish} --command $"complete '--do-complete=($spans | str replace --all "'" "\\'" | str join ' ')'"
+        ${fish} --command $"complete '--do-complete=($spans | str replace --all "'" "\\'" | str join ' ')'"
         | from tsv --flexible --noheaders --no-infer
         | rename value description
         | update value {|row|
@@ -156,7 +160,7 @@ let
     }
 
     let carapace_completer = {|spans: list<string>|
-        ${e pkgs.carapace} $spans.0 nushell ...$spans
+        ${carapace} $spans.0 nushell ...$spans
         | from json
         | if ($in | default [] | where value =~ '^-.*ERR$' | is-empty) { $in } else { null }
     }
@@ -215,6 +219,62 @@ in
         success_symbol = "[➜](bold green)";
         error_symbol = "[➜](bold red)";
       };
+      custom.jj = {
+        format = "on [$symbol]($style) $output";
+        symbol = "";
+        style = "bold purple";
+        shell = [
+          "sh"
+          "--norc"
+          "--noprofile"
+        ];
+        command = ''
+          ${jj} log --revisions @ --limit 1 --ignore-working-copy --no-graph --color always  --template '
+            separate(" ",
+              change_id.shortest(6),
+              tags.map(|x| truncate_end(10, x.name(), "…")).join(" "),
+              bookmarks.map(|x| truncate_end(10, concat(x.name(), if(!x.synced(), "*")), "…")).join(" "),
+              if(bookmarks.len() > 0, label("rest", "|")),
+              if(description,
+                label(
+                  if(
+                    bookmarks.any(|x| !x.synced()),
+                    "working_copy",
+                    "default"
+                  ),
+                  truncate_end(50, description.first_line(), "…")
+                ),
+              ),
+              if(conflict, "conflict"),
+              if(divergent, "divergent"),
+              if(hidden, "hidden"),
+            )
+          '
+        '';
+        when = "jj --ignore-working-copy root";
+        description = "The current jj status";
+      };
+      git_status.disabled = true;
+      custom.git_status = {
+        when = "! jj --ignore-working-copy root";
+        command = "starship module git_status";
+        description = "Only show git_status if we're not in a jj repo";
+        style = "";
+      };
+      git_branch.disabled = true;
+      custom.git_branch = {
+        when = "! jj --ignore-working-copy root";
+        command = "starship module git_branch";
+        description = "Only show git_branch if we're not in a jj repo";
+        style = "";
+      };
+      format = lib.concatStrings [
+        "$directory"
+        "\${custom.jj}"
+        "$git_branch"
+        "$line_break"
+        "$character"
+      ];
     };
   };
 }
