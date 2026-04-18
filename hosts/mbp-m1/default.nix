@@ -60,7 +60,6 @@
       "ali"
       "mas"
       "showkey"
-      "bitwarden-cli"
       "qemu"
       "cliproxyapi"
     ];
